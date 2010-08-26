@@ -8,6 +8,21 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigTransformationTool.Base", "ConfigTransformationTool.Base\ConfigTransformationTool.Base.csproj", "{2E51DACC-745E-4F3A-8D30-DDC689A90DB7}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs14
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ConfigTransformationTool\\ConfigTransformationTool.csproj
+		SccProjectName1 = ConfigTransformationTool
+		SccLocalPath1 = ConfigTransformationTool
+		SccProjectUniqueName2 = ConfigTransformationTool.Tests\\ConfigTransformationTool.Tests.csproj
+		SccProjectName2 = ConfigTransformationTool.Tests
+		SccLocalPath2 = ConfigTransformationTool.Tests
+		SccProjectUniqueName3 = ConfigTransformationTool.Base\\ConfigTransformationTool.Base.csproj
+		SccProjectName3 = ConfigTransformationTool.Base
+		SccLocalPath3 = ConfigTransformationTool.Base
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
