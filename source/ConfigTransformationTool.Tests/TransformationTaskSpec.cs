@@ -43,10 +43,6 @@ namespace ConfigTransformationTool.Tests
 
 <configuration>
 
-	<configSections>
-		<section name=""custom"" type=""MsiCommon.Configuration.CustomConfiguration, MsiCommon"" />
-	</configSections>
-
 	<custom>
 		<groups>
 			<group name=""TestGroup1"">

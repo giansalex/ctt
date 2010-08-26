@@ -50,11 +50,11 @@ namespace ConfigTransformationTool
 			Console.WriteLine("Examples:");
 			Console.WriteLine();
 			Console.WriteLine(string.Format("{0} source:\"source.config\"", exeFile));
-			Console.WriteLine("\ttransform:\"transformation.config\"");
+			Console.WriteLine("\ttransform:\"transform.config\"");
 			Console.WriteLine("\tdestination:\"destination.config\"");
 			Console.WriteLine();
 			Console.WriteLine(string.Format("{0} s:\"source.config\"", exeFile));
-			Console.WriteLine("\tt:\"transformation.config\"");
+			Console.WriteLine("\tt:\"transform.config\"");
 			Console.WriteLine("\td:\"destination.config\"");
 			Console.WriteLine();
 			Console.WriteLine("To get more details about transform file syntax go to");
