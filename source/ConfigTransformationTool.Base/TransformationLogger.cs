@@ -5,7 +5,8 @@ using Microsoft.Web.Publishing.Tasks;
 
 namespace ConfigTransformationTool.Base
 {
-	class TransformationLogger : IXmlTransformationLogger
+	// Simple implementation of logger
+	public class TransformationLogger : IXmlTransformationLogger
 	{
 		private readonly static ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType); 
 

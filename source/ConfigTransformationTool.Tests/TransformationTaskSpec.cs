@@ -3,13 +3,15 @@ using System.IO;
 using ConfigTransformationTool.Base;
 using NUnit.Framework;
 
+// ReSharper disable InconsistentNaming
 namespace ConfigTransformationTool.Tests
 {
 	[TestFixture]
 	public class TransformationTaskSpec : BaseSpec
 	{
-		// ReSharper disable InconsistentNaming
-
+		/// <summary>
+		/// Simple test 
+		/// </summary>
 		[Test]
 		public void Transfarmotaion_Should_Happend()
 		{
@@ -78,6 +80,5 @@ namespace ConfigTransformationTool.Tests
 	
 </configuration>";
 
-		// ReSharper restore InconsistentNaming
 	}
 }

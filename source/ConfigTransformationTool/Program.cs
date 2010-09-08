@@ -12,26 +12,38 @@ namespace ConfigTransformationTool
 
 		private static int Main(string[] args)
 		{
-			ArgumentsLoader argumentsLoader = new ArgumentsLoader();
-
-			XmlConfigurator.Configure();
-			AppDomain.CurrentDomain.UnhandledException += CurrentDomainUnhandledException;
-
-			argumentsLoader.Load(args);
-
-			if (argumentsLoader.IsAllParametersSet)
+			try
 			{
-				TransformationTask task = new TransformationTask(argumentsLoader.SourceFilePath, argumentsLoader.TransformFilePath);
-				if (task.Execute(argumentsLoader.DestinationFilePath))
-					return 4;
-			}
-			else
-			{
-				ShowToolHelp();
-				return 1;
-			}
+				ArgumentsLoader argumentsLoader = new ArgumentsLoader();
 
-			return 0;
+				XmlConfigurator.Configure();
+				AppDomain.CurrentDomain.UnhandledException += CurrentDomainUnhandledException;
+
+				argumentsLoader.Load(args);
+
+				if (argumentsLoader.IsAllRequiredParametersSet)
+				{
+					TransformationTask task = new TransformationTask(argumentsLoader.SourceFilePath, argumentsLoader.TransformFilePath);
+
+					if (!string.IsNullOrWhiteSpace(argumentsLoader.ParametersString))
+						task.SetParameters(ParametersParser.ReadParameters(argumentsLoader.ParametersString));
+
+					if (task.Execute(argumentsLoader.DestinationFilePath, argumentsLoader.ForceParametersTask))
+						return 4;
+				}
+				else
+				{
+					ShowToolHelp();
+					return 1;
+				}
+
+				return 0;
+			} 
+			catch(Exception e)
+			{
+				Log.Fatal(e);
+				return 4;
+			}
 		}
 
 		private static void ShowToolHelp()
@@ -43,9 +55,11 @@ namespace ConfigTransformationTool
 			Console.WriteLine("by outcoldman, http://outcoldman.ru, 2010");
 			Console.WriteLine();
 			Console.WriteLine("Arguments:");
-			Console.WriteLine("\tsource: (s:) - source file path");
-			Console.WriteLine("\ttransform: (t:) - transform file path");
-			Console.WriteLine("\tdestination: (d:) - destination file path");
+			Console.WriteLine("  source:{file} (s:) - source file path");
+			Console.WriteLine("  transform:{file} (t:) - transform file path");
+			Console.WriteLine("  destination:{file} (d:) - destination file path");
+			Console.WriteLine("  parameters:{parameters} (p:) - (Optional parameter) \r\n    string of parameters used expected by source file separated by ';',\r\n    value should be separated from name by ':',\r\n    if value contains spaces - quote it");
+			Console.WriteLine("  fpt  - (Optional parameter) force parameters task \r\n    (if parameters argument is empty, but need to apply default values),\r\n    default is false");
 			Console.WriteLine();
 			Console.WriteLine("Examples:");
 			Console.WriteLine();
@@ -56,6 +70,7 @@ namespace ConfigTransformationTool
 			Console.WriteLine(string.Format("{0} s:\"source.config\"", exeFile));
 			Console.WriteLine("\tt:\"transform.config\"");
 			Console.WriteLine("\td:\"destination.config\"");
+			Console.WriteLine("\tp:Parameter1:\"Value of parameter1\";Parameter2:Value2");
 			Console.WriteLine();
 			Console.WriteLine("To get more details about transform file syntax go to");
 			Console.WriteLine("http://msdn.microsoft.com/en-us/library/dd465326.aspx");

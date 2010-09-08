@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Xml;
@@ -16,6 +17,8 @@ namespace ConfigTransformationTool.Base
 		private readonly static ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType); 
 
 		private readonly TransformationLogger _transfomrationLogger = new TransformationLogger();
+
+		private IDictionary<string, string> _parameters;
 
 		/// <summary>
 		/// Empty constructor
@@ -38,6 +41,15 @@ namespace ConfigTransformationTool.Base
 		}
 
 		/// <summary>
+		/// Set parameters and values for transform
+		/// </summary>
+		/// <param name="parameters">Dictionary of parameters with values.</param>
+		public void SetParameters(IDictionary<string, string> parameters)
+		{
+			_parameters = parameters;
+		}
+
+		/// <summary>
 		/// Source file
 		/// </summary>
 		public string SourceFilePath { get; set; }
@@ -54,8 +66,9 @@ namespace ConfigTransformationTool.Base
 		/// Make transformation of file <see cref="SourceFilePath"/> with transform file <see cref="TransformFile"/> to <paramref name="destinationFilePath"/>.
 		/// </summary>
 		/// <param name="destinationFilePath">File path of destination transformation.</param>
+		/// <param name="forceParametersTask">Invoke parameters task even if the parameters are not set with <see cref="SetParameters" />.</param>
 		/// <returns>Return true if transformation finish successfully, otherwise false.</returns>
-		public bool Execute(string destinationFilePath)
+		public bool Execute(string destinationFilePath, bool forceParametersTask = false)
 		{
 			if (string.IsNullOrWhiteSpace(destinationFilePath))
 				throw new ArgumentException("Destination file can't be empty.", "destinationFilePath");
@@ -73,12 +86,21 @@ namespace ConfigTransformationTool.Base
 
 			try
 			{
-				string transform = ReadTransform();
+				string source = ReadContent(SourceFilePath);
+
+				if (_parameters != null || forceParametersTask)
+				{
+					ParametersTask parametersTask = new ParametersTask();
+					if (_parameters != null)
+						parametersTask.AddParameters(_parameters);
+					source = parametersTask.ApplyParameters(source);
+				}
 
 				XmlDocument document = new XmlDocument();
-				document.Load(SourceFilePath);
+				document.LoadXml(source);
 
-				XmlTransformation transformation = new XmlTransformation(transform, false, _transfomrationLogger);
+				XmlTransformation transformation = new XmlTransformation(ReadContent(TransformFile), false, _transfomrationLogger);
+				
 				bool result = transformation.Apply(document);
 
 				document.Save(destinationFilePath);
@@ -92,14 +114,12 @@ namespace ConfigTransformationTool.Base
 			}
 		}
 
-		private string ReadTransform()
+		private static string ReadContent(string path)
 		{
-			string transform;
-			using (StreamReader reader = new StreamReader(TransformFile))
+			using (StreamReader reader = new StreamReader(path))
 			{
-				transform = reader.ReadToEnd();
+				return reader.ReadToEnd();
 			}
-			return transform;
 		}
 	}
 }

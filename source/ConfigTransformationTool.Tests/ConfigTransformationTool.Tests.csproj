@@ -56,6 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseSpec.cs" />
+    <Compile Include="ParametersParserSpec.cs" />
+    <Compile Include="ParametersTaskSpec.cs" />
+    <Compile Include="PerformanceTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransformationTaskSpec.cs" />
   </ItemGroup>
