@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Xml;
 using log4net;
-using Microsoft.Build.Utilities;
 using Microsoft.Web.Publishing.Tasks;
 
 namespace ConfigTransformationTool.Base
@@ -14,6 +14,8 @@ namespace ConfigTransformationTool.Base
 	public class TransformationTask
 	{
 		private readonly static ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType); 
+
+		private readonly TransformationLogger _transfomrationLogger = new TransformationLogger();
 
 		/// <summary>
 		/// Empty constructor
@@ -71,20 +73,33 @@ namespace ConfigTransformationTool.Base
 
 			try
 			{
-				TransformXml transformXml = new TransformXml
-				                            	{
-				                            		BuildEngine = new CurrentBuildEngine(),
-				                            		Destination = new TaskItem(destinationFilePath),
-													Source = new TaskItem(SourceFilePath),
-													Transform = new TaskItem(TransformFile)
-				                            	};
-				return transformXml.Execute();
+				string transform = ReadTransform();
+
+				XmlDocument document = new XmlDocument();
+				document.Load(SourceFilePath);
+
+				XmlTransformation transformation = new XmlTransformation(transform, false, _transfomrationLogger);
+				bool result = transformation.Apply(document);
+
+				document.Save(destinationFilePath);
+
+				return result;
 			} 
 			catch(Exception e)
 			{
 				Log.Error(e);
 				return false;
 			}
+		}
+
+		private string ReadTransform()
+		{
+			string transform;
+			using (StreamReader reader = new StreamReader(TransformFile))
+			{
+				transform = reader.ReadToEnd();
+			}
+			return transform;
 		}
 	}
 }

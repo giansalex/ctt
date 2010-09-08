@@ -26,7 +26,7 @@ namespace ConfigTransformationTool.Tests
 			WriteToFile(transformFile, Transform);
 
 			TransformationTask task = new TransformationTask(sourceFile, transformFile);
-			task.Execute(resultFile);
+			Assert.IsTrue(task.Execute(resultFile));
 
 			string fileContent;
 
