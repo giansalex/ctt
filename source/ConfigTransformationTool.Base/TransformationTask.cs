@@ -86,20 +86,20 @@ namespace ConfigTransformationTool.Base
 
 			try
 			{
-				string source = ReadContent(SourceFilePath);
+				var transformFile = ReadContent(TransformFile);
 
 				if (_parameters != null || forceParametersTask)
 				{
 					ParametersTask parametersTask = new ParametersTask();
 					if (_parameters != null)
 						parametersTask.AddParameters(_parameters);
-					source = parametersTask.ApplyParameters(source);
+					transformFile = parametersTask.ApplyParameters(transformFile);
 				}
 
 				XmlDocument document = new XmlDocument();
-				document.LoadXml(source);
-
-				XmlTransformation transformation = new XmlTransformation(ReadContent(TransformFile), false, _transfomrationLogger);
+				document.Load(SourceFilePath);
+				
+				XmlTransformation transformation = new XmlTransformation(transformFile, false, _transfomrationLogger);
 				
 				bool result = transformation.Apply(document);
 
