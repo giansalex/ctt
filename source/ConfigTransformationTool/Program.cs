@@ -28,7 +28,7 @@ namespace ConfigTransformationTool
 					if (!string.IsNullOrWhiteSpace(argumentsLoader.ParametersString))
 						task.SetParameters(ParametersParser.ReadParameters(argumentsLoader.ParametersString));
 
-					if (task.Execute(argumentsLoader.DestinationFilePath, argumentsLoader.ForceParametersTask))
+					if (!task.Execute(argumentsLoader.DestinationFilePath, argumentsLoader.ForceParametersTask))
 						return 4;
 				}
 				else
