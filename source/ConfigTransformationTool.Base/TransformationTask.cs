@@ -88,7 +88,7 @@ namespace ConfigTransformationTool.Base
 			{
 				var transformFile = ReadContent(TransformFile);
 
-				if (_parameters != null || forceParametersTask)
+				if ((_parameters != null && _parameters.Count > 0) || forceParametersTask)
 				{
 					ParametersTask parametersTask = new ParametersTask();
 					if (_parameters != null)

@@ -1,4 +1,5 @@
-﻿using ConfigTransformationTool.Base;
+﻿using System.Collections.Generic;
+using ConfigTransformationTool.Base;
 using NUnit.Framework;
 
 // ReSharper disable InconsistentNaming
@@ -14,8 +15,8 @@ namespace ConfigTransformationTool.Tests
 		public void Sample()
 		{
 			const string parametersLine = "Parameter1:Value1;Parameter2:121.232";
-
-			var parameters = ParametersParser.ReadParameters(parametersLine);
+			Dictionary<string, string> parameters = new Dictionary<string,string>();
+			ParametersParser.ReadParameters(parametersLine, parameters);
 
 			Assert.AreEqual("Value1", parameters["Parameter1"]);
 			Assert.AreEqual("121.232", parameters["Parameter2"]);
@@ -29,7 +30,8 @@ namespace ConfigTransformationTool.Tests
 		{
 			const string parametersLine = "Parameter1:Value1;Parameter2:\"121;232\"";
 
-			var parameters = ParametersParser.ReadParameters(parametersLine);
+			Dictionary<string, string> parameters = new Dictionary<string, string>();
+			ParametersParser.ReadParameters(parametersLine, parameters);
 
 			Assert.AreEqual("Value1", parameters["Parameter1"]);
 			Assert.AreEqual("121;232", parameters["Parameter2"]);
@@ -43,7 +45,8 @@ namespace ConfigTransformationTool.Tests
 		{
 			const string parametersLine = "Parameter1:Value1;Parameter2:\"121.232\";";
 
-			var parameters = ParametersParser.ReadParameters(parametersLine);
+			Dictionary<string, string> parameters = new Dictionary<string, string>();
+			ParametersParser.ReadParameters(parametersLine, parameters);
 
 			Assert.AreEqual("Value1", parameters["Parameter1"]);
 			Assert.AreEqual("121.232", parameters["Parameter2"]);
@@ -57,7 +60,8 @@ namespace ConfigTransformationTool.Tests
 		{
 			const string parametersLine = @"Parameter1:Value1;Parameter2:""12\""1.2\""32"";";
 
-			var parameters = ParametersParser.ReadParameters(parametersLine);
+			Dictionary<string, string> parameters = new Dictionary<string, string>();
+			ParametersParser.ReadParameters(parametersLine, parameters);
 
 			Assert.AreEqual("Value1", parameters["Parameter1"]);
 			Assert.AreEqual("12\"1.2\"32", parameters["Parameter2"]);

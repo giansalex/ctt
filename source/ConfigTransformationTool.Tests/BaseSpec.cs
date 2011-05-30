@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using log4net.Appender;
 using log4net.Config;
 using log4net.Layout;
@@ -24,10 +25,7 @@ namespace ConfigTransformationTool.Tests
 		/// <param name="content">Content of file</param>
 		protected void WriteToFile(string filePath, string content)
 		{
-			using (StreamWriter writer = new StreamWriter(filePath, false))
-			{
-				writer.Write(content);
-			}
+			File.WriteAllText(filePath, content);
 		}
 
 		/// <summary>

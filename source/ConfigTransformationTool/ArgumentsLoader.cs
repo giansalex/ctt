@@ -15,6 +15,7 @@
 			SourceFilePath = string.Empty;
 			TransformFilePath = string.Empty;
 			ParametersString = string.Empty;
+			ParametersFile = string.Empty;
 			ForceParametersTask = false;
 
 			foreach (string arg in args)
@@ -30,6 +31,9 @@
 
 				if (arg.StartsWith("p:") || arg.StartsWith("parameters:"))
 					ParametersString = GetValueFromArguments(arg);
+
+				if (arg.StartsWith("pf:") || arg.StartsWith("parameters.file:"))
+					ParametersFile = GetValueFromArguments(arg);
 
 				if (arg.StartsWith("fpt"))
 					ForceParametersTask = true;
@@ -53,6 +57,8 @@
 		public string DestinationFilePath { get; private set; }
 
 		public string ParametersString { get; private set; }
+
+		public string ParametersFile { get; private set; }
 
 		public bool ForceParametersTask { get; private set; }
 

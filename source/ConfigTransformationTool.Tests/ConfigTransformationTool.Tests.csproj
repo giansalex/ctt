@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseSpec.cs" />
+    <Compile Include="ParametersLoaderSpec.cs" />
     <Compile Include="ParametersParserSpec.cs" />
     <Compile Include="ParametersTaskSpec.cs" />
     <Compile Include="PerformanceTester.cs" />

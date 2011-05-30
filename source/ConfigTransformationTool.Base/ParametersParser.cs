@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using log4net;
@@ -10,7 +11,7 @@ namespace ConfigTransformationTool.Base
 	/// </summary>
 	public static class ParametersParser
 	{
-		private readonly static ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType); 
+		private readonly static ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
 		/// <summary>
 		/// Parse string of parameters <paramref name="parametersString"/> separated by semi ';'.
@@ -19,13 +20,14 @@ namespace ConfigTransformationTool.Base
 		/// You can escape symbols '\' and '"' with \.
 		/// </summary>
 		/// <param name="parametersString">String of parameters</param>
-		/// <returns>Dicrionary of parameters, where keys are names and values are values of parameters. 
-		/// Can be null if <paramref name="parametersString"/> is empty or null.</returns>
-		public static IDictionary<string, string> ReadParameters(string parametersString)
+		/// <param name="parameters">All parameters will be read to current dictionary.</param>
+		public static void ReadParameters(string parametersString, IDictionary<string, string> parameters)
 		{
-			if (string.IsNullOrWhiteSpace(parametersString)) return null;
+			if (parameters == null)
+				throw new ArgumentNullException("parameters");
 
-			Dictionary<string, string> parameters = new Dictionary<string, string>();
+			if (string.IsNullOrWhiteSpace(parametersString)) 
+				return;
 
 			var source = parametersString.ToCharArray();
 
@@ -102,11 +104,9 @@ namespace ConfigTransformationTool.Base
 					Log.DebugFormat("Parameter Name: '{0}', Value: '{1}'", parameter.Key, parameter.Value);
 				}
 			}
-
-			return parameters;
 		}
 
-		private static void AddParameter(Dictionary<string, string> parameters, StringBuilder parameterName, StringBuilder parameterValue)
+		private static void AddParameter(IDictionary<string, string> parameters, StringBuilder parameterName, StringBuilder parameterValue)
 		{
 			var name = parameterName.ToString();
 			if (!string.IsNullOrWhiteSpace(name))

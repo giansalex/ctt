@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using ConfigTransformationTool.Base;
 using log4net;
@@ -25,8 +27,15 @@ namespace ConfigTransformationTool
 				{
 					TransformationTask task = new TransformationTask(argumentsLoader.SourceFilePath, argumentsLoader.TransformFilePath);
 
+					IDictionary<string, string> parameters = new Dictionary<string, string>();
+
 					if (!string.IsNullOrWhiteSpace(argumentsLoader.ParametersString))
-						task.SetParameters(ParametersParser.ReadParameters(argumentsLoader.ParametersString));
+						ParametersParser.ReadParameters(argumentsLoader.ParametersString, parameters);
+
+					if (!string.IsNullOrWhiteSpace(argumentsLoader.ParametersFile))
+						ParametersLoader.LoadParameters(argumentsLoader.ParametersFile, parameters);
+
+					task.SetParameters(parameters);
 
 					if (!task.Execute(argumentsLoader.DestinationFilePath, argumentsLoader.ForceParametersTask))
 						return 4;
@@ -59,6 +68,7 @@ namespace ConfigTransformationTool
 			Console.WriteLine("  transform:{file} (t:) - transform file path");
 			Console.WriteLine("  destination:{file} (d:) - destination file path");
 			Console.WriteLine("  parameters:{parameters} (p:) - (Optional parameter) \r\n    string of parameters used expected by source file separated by ';',\r\n    value should be separated from name by ':',\r\n    if value contains spaces - quote it");
+			Console.WriteLine("  parameters.file:{parameters file} (pf:) - (Optional parameter) \r\n    path to xml file which contains parameters with values \r\n    use xml schema ParametersSchema.xsd to make right file");
 			Console.WriteLine("  fpt  - (Optional parameter) force parameters task \r\n    (if parameters argument is empty, but need to apply default values),\r\n    default is false");
 			Console.WriteLine();
 			Console.WriteLine("Examples:");
