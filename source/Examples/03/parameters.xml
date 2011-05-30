@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+	<param name="Parameter1" value="True" />
+	<param name="Test3Value" value="c:\Program Files\Test" />
+</parameters>
