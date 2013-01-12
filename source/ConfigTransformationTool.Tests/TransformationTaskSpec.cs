@@ -16,7 +16,7 @@ namespace ConfigTransformationTool.Tests
     {
         private const string Source = @"<?xml version=""1.0""?>
 
-<configuration>
+<configuration xmlns=""http://schemas.itisnotadomain/Configuration/v2.0"" >
 
 	<custom>
 		<groups>
@@ -39,7 +39,7 @@ namespace ConfigTransformationTool.Tests
 </configuration>";
 
         private const string Transform = @"<?xml version=""1.0""?>
-<configuration xmlns:xdt=""http://schemas.microsoft.com/XML-Document-Transform"">
+<configuration xmlns:xdt=""http://schemas.microsoft.com/XML-Document-Transform"" xmlns=""http://schemas.itisnotadomain/Configuration/v2.0"">
 	
 	<custom>
 		<groups>
