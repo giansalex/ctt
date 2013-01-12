@@ -2,12 +2,10 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ConfigTransformationTool.Tests
+namespace OutcoldSolutions.ConfigTransformationTool.Suites
 {
     using System;
     using System.IO;
-
-    using ConfigTransformationTool.Base;
 
     using NUnit.Framework;
 
@@ -71,7 +69,7 @@ namespace ConfigTransformationTool.Tests
             // Create transform file
             this.WriteToFile(transformFile, Transform);
 
-            TransformationTask task = new TransformationTask(sourceFile, transformFile);
+            TransformationTask task = new TransformationTask(this.Log, sourceFile, transformFile);
             Assert.IsTrue(task.Execute(resultFile));
 
             string fileContent;

@@ -5,13 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigTransformationTool", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigTransformationTool.Tests", "ConfigTransformationTool.Tests\ConfigTransformationTool.Tests.csproj", "{14D5E90B-134D-45C5-9E31-4219F209A507}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConfigTransformationTool.Base", "ConfigTransformationTool.Base\ConfigTransformationTool.Base.csproj", "{2E51DACC-745E-4F3A-8D30-DDC689A90DB7}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{20402A8D-D9B5-4D13-BD18-E2F5F1CC45D8}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5E619C56-396C-482C-B89C-2378EF5B1909}"
@@ -49,16 +46,6 @@ Global
 		{14D5E90B-134D-45C5-9E31-4219F209A507}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{14D5E90B-134D-45C5-9E31-4219F209A507}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{14D5E90B-134D-45C5-9E31-4219F209A507}.Release|x86.ActiveCfg = Release|Any CPU
-		{2E51DACC-745E-4F3A-8D30-DDC689A90DB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E51DACC-745E-4F3A-8D30-DDC689A90DB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E51DACC-745E-4F3A-8D30-DDC689A90DB7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{2E51DACC-745E-4F3A-8D30-DDC689A90DB7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{2E51DACC-745E-4F3A-8D30-DDC689A90DB7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2E51DACC-745E-4F3A-8D30-DDC689A90DB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E51DACC-745E-4F3A-8D30-DDC689A90DB7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E51DACC-745E-4F3A-8D30-DDC689A90DB7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{2E51DACC-745E-4F3A-8D30-DDC689A90DB7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{2E51DACC-745E-4F3A-8D30-DDC689A90DB7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

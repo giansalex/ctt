@@ -2,12 +2,10 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ConfigTransformationTool.Tests
+namespace OutcoldSolutions.ConfigTransformationTool.Suites
 {
     using System.Collections.Generic;
     using System.Diagnostics;
-
-    using ConfigTransformationTool.Base;
 
     using NUnit.Framework;
 

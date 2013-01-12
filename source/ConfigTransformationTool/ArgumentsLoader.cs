@@ -2,7 +2,7 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ConfigTransformationTool
+namespace OutcoldSolutions.ConfigTransformationTool
 {
     using System;
 
@@ -33,6 +33,8 @@ namespace ConfigTransformationTool
 
         public bool ForceParametersTask { get; private set; }
 
+        public bool Verbose { get; private set; }
+
         /// <summary>
         /// Load arguments from command line
         /// </summary>
@@ -45,35 +47,46 @@ namespace ConfigTransformationTool
             this.ParametersString = string.Empty;
             this.ParametersFile = string.Empty;
             this.ForceParametersTask = false;
+            this.Verbose = false;
 
             foreach (string arg in args)
             {
-                if (arg.StartsWith("s:") || arg.StartsWith("source:"))
+                if (arg.IndexOf("s:", StringComparison.OrdinalIgnoreCase) == 0
+                    || arg.IndexOf("source:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     this.SourceFilePath = GetFileNameFromArguments(arg);
                 }
 
-                if (arg.StartsWith("t:") || arg.StartsWith("transform:"))
+                if (arg.IndexOf("t:", StringComparison.OrdinalIgnoreCase) == 0
+                    || arg.IndexOf("transform:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     this.TransformFilePath = GetFileNameFromArguments(arg);
                 }
 
-                if (arg.StartsWith("d:") || arg.StartsWith("destination:"))
+                if (arg.IndexOf("d:", StringComparison.OrdinalIgnoreCase) == 0 
+                    || arg.IndexOf("destination:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     this.DestinationFilePath = GetFileNameFromArguments(arg);
                 }
 
-                if (arg.StartsWith("p:") || arg.StartsWith("parameters:"))
+                if (arg.IndexOf("p:", StringComparison.OrdinalIgnoreCase) == 0
+                    || arg.IndexOf("parameters:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     this.ParametersString = GetValueFromArguments(arg);
                 }
 
-                if (arg.StartsWith("pf:") || arg.StartsWith("parameters.file:"))
+                if (arg.IndexOf("pf:", StringComparison.OrdinalIgnoreCase) == 0
+                    || arg.IndexOf("parameters.file:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     this.ParametersFile = GetValueFromArguments(arg);
                 }
 
-                if (arg.StartsWith("fpt"))
+                if (arg.Equals("fpt", StringComparison.OrdinalIgnoreCase))
+                {
+                    this.ForceParametersTask = true;
+                }
+
+                if (arg.Equals("v", StringComparison.OrdinalIgnoreCase) || arg.Equals("verbose", StringComparison.OrdinalIgnoreCase))
                 {
                     this.ForceParametersTask = true;
                 }

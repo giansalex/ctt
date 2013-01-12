@@ -2,17 +2,24 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ConfigTransformationTool.Tests
+namespace OutcoldSolutions.ConfigTransformationTool.Suites
 {
     using System.Collections.Generic;
-
-    using ConfigTransformationTool.Base;
 
     using NUnit.Framework;
 
     [TestFixture]
-    public class ParametersParserSpec
+    public class ParametersParserSpec : BaseSpec
     {
+        private ParametersParser parser;
+
+        public override void SetUp()
+        {
+            base.SetUp();
+
+            this.parser = new ParametersParser(this.Log);
+        }
+
         /// <summary>
         /// Check simple parameters command line
         /// </summary>
@@ -21,7 +28,7 @@ namespace ConfigTransformationTool.Tests
         {
             const string ParametersLine = "Parameter1:Value1;Parameter2:121.232";
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            ParametersParser.ReadParameters(ParametersLine, parameters);
+            this.parser.ReadParameters(ParametersLine, parameters);
 
             Assert.AreEqual("Value1", parameters["Parameter1"]);
             Assert.AreEqual("121.232", parameters["Parameter2"]);
@@ -36,7 +43,7 @@ namespace ConfigTransformationTool.Tests
             const string ParametersLine = "Parameter1:Value1;Parameter2:\"121;232\"";
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            ParametersParser.ReadParameters(ParametersLine, parameters);
+            this.parser.ReadParameters(ParametersLine, parameters);
 
             Assert.AreEqual("Value1", parameters["Parameter1"]);
             Assert.AreEqual("121;232", parameters["Parameter2"]);
@@ -51,7 +58,7 @@ namespace ConfigTransformationTool.Tests
             const string ParametersLine = "Parameter1:Value1;Parameter2:\"121.232\";";
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            ParametersParser.ReadParameters(ParametersLine, parameters);
+            this.parser.ReadParameters(ParametersLine, parameters);
 
             Assert.AreEqual("Value1", parameters["Parameter1"]);
             Assert.AreEqual("121.232", parameters["Parameter2"]);
@@ -66,7 +73,7 @@ namespace ConfigTransformationTool.Tests
             const string ParametersLine = @"Parameter1:Value1;Parameter2:""12\""1.2\""32"";";
 
             Dictionary<string, string> parameters = new Dictionary<string, string>();
-            ParametersParser.ReadParameters(ParametersLine, parameters);
+            this.parser.ReadParameters(ParametersLine, parameters);
 
             Assert.AreEqual("Value1", parameters["Parameter1"]);
             Assert.AreEqual("12\"1.2\"32", parameters["Parameter2"]);

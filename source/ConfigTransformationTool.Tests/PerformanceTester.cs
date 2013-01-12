@@ -2,7 +2,7 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ConfigTransformationTool.Tests
+namespace OutcoldSolutions.ConfigTransformationTool.Suites
 {
     using System;
     using System.Diagnostics;
@@ -48,11 +48,11 @@ namespace ConfigTransformationTool.Tests
         /// <returns></returns>
         public void MeasureExecTime(int iterations)
         {
-            Action(); // warm up
+            this.Action(); // warm up
             var sw = Stopwatch.StartNew();
             for (int i = 0; i < iterations; i++)
             {
-                Action();
+                this.Action();
             }
 
             sw.Stop();
@@ -69,12 +69,12 @@ namespace ConfigTransformationTool.Tests
         {
             TimeSpan total = new TimeSpan(0);
 
-            Action(); // warm up
+            this.Action(); // warm up
             for (int i = 0; i < iterations; i++)
             {
                 var sw = Stopwatch.StartNew();
 
-                Action();
+                this.Action();
 
                 sw.Stop();
                 TimeSpan thisIteration = sw.Elapsed;

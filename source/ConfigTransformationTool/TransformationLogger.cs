@@ -2,44 +2,46 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ConfigTransformationTool.Base
+namespace OutcoldSolutions.ConfigTransformationTool
 {
     using System;
-    using System.Reflection;
-
-    using log4net;
 
     using Microsoft.Web.XmlTransform;
 
     // Simple implementation of logger
     public class TransformationLogger : IXmlTransformationLogger
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly OutputLog log;
+
+        public TransformationLogger(OutputLog log)
+        {
+            this.log = log;
+        }
 
         public void LogMessage(string message, params object[] messageArgs)
         {
-            Log.InfoFormat(message, messageArgs);
+            this.log.WriteLine(message, messageArgs);
         }
 
         public void LogMessage(MessageType type, string message, params object[] messageArgs)
         {
-            Log.InfoFormat(message, messageArgs);
+            this.log.WriteLine(message, messageArgs);
         }
 
         public void LogWarning(string message, params object[] messageArgs)
         {
-            Log.WarnFormat(message, messageArgs);
+            this.log.WriteLine(message, messageArgs);
         }
 
         public void LogWarning(string file, string message, params object[] messageArgs)
         {
-            Log.WarnFormat(string.Format("File: {0}, Message: {1}", file, message), messageArgs);
+            this.log.WriteLine(string.Format("File: {0}, Message: {1}", file, message), messageArgs);
         }
 
         public void LogWarning(
             string file, int lineNumber, int linePosition, string message, params object[] messageArgs)
         {
-            Log.WarnFormat(
+            this.log.WriteLine(
                 string.Format(
                     "File: {0}, LineNumber: {1}, LinePosition: {2}, Message: {3}",
                     file,
@@ -51,17 +53,17 @@ namespace ConfigTransformationTool.Base
 
         public void LogError(string message, params object[] messageArgs)
         {
-            Log.ErrorFormat(message, messageArgs);
+            this.log.WriteLine(message, messageArgs);
         }
 
         public void LogError(string file, string message, params object[] messageArgs)
         {
-            Log.ErrorFormat(string.Format("File: {0}, Message: {1}", file, message), messageArgs);
+            this.log.WriteLine(string.Format("File: {0}, Message: {1}", file, message), messageArgs);
         }
 
         public void LogError(string file, int lineNumber, int linePosition, string message, params object[] messageArgs)
         {
-            Log.ErrorFormat(
+            this.log.WriteLine(
                 string.Format(
                     "File: {0}, LineNumber: {1}, LinePosition: {2}, Message: {3}",
                     file,
@@ -73,38 +75,37 @@ namespace ConfigTransformationTool.Base
 
         public void LogErrorFromException(Exception ex)
         {
-            Log.Error(ex);
+            this.log.WriteLine("{0}", ex);
         }
 
         public void LogErrorFromException(Exception ex, string file)
         {
-            Log.Error(file, ex);
+            this.log.WriteLine("Exception {0} while reading {1}.", ex, file);
         }
 
         public void LogErrorFromException(Exception ex, string file, int lineNumber, int linePosition)
         {
-            Log.Error(
-                string.Format("File: {0}, LineNumber: {1}, LinePosition: {2}", file, lineNumber, linePosition), ex);
+            this.log.WriteLine("Exception {0} while reading {1}: LineNumber: {2}, LinePosition: {3}", ex, file, lineNumber, linePosition);
         }
 
         public void StartSection(string message, params object[] messageArgs)
         {
-            Log.InfoFormat(message, messageArgs);
+            this.log.WriteLine(message, messageArgs);
         }
 
         public void StartSection(MessageType type, string message, params object[] messageArgs)
         {
-            Log.InfoFormat(message, messageArgs);
+            this.log.WriteLine(message, messageArgs);
         }
 
         public void EndSection(string message, params object[] messageArgs)
         {
-            Log.InfoFormat(message, messageArgs);
+            this.log.WriteLine(message, messageArgs);
         }
 
         public void EndSection(MessageType type, string message, params object[] messageArgs)
         {
-            Log.InfoFormat(message, messageArgs);
+            this.log.WriteLine(message, messageArgs);
         }
     }
 }

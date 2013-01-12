@@ -2,7 +2,7 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ConfigTransformationTool.Base
+namespace OutcoldSolutions.ConfigTransformationTool
 {
     using System;
     using System.Collections.Generic;

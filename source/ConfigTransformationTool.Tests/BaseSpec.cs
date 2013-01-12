@@ -2,13 +2,10 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ConfigTransformationTool.Tests
+namespace OutcoldSolutions.ConfigTransformationTool.Suites
 {
+    using System;
     using System.IO;
-
-    using log4net.Appender;
-    using log4net.Config;
-    using log4net.Layout;
 
     using NUnit.Framework;
 
@@ -17,10 +14,12 @@ namespace ConfigTransformationTool.Tests
     /// </summary>
     public abstract class BaseSpec
     {
+        protected OutputLog Log { get; private set; }
+
         [SetUp]
-        public void SetUp()
+        public virtual void SetUp()
         {
-            ConfigureLogger();
+            this.Log = OutputLog.FromWriter(Console.Out);
         }
 
         /// <summary>
@@ -31,22 +30,6 @@ namespace ConfigTransformationTool.Tests
         protected void WriteToFile(string filePath, string content)
         {
             File.WriteAllText(filePath, content);
-        }
-
-        /// <summary>
-        /// Configure log4net for showing trace information in output window.
-        /// </summary>
-        private static void ConfigureLogger()
-        {
-            PatternLayout patternLayout = new PatternLayout { ConversionPattern = "%message%newline" };
-            patternLayout.ActivateOptions();
-
-            ForwardingAppender appender = new ForwardingAppender();
-
-            TraceAppender traceAppender = new TraceAppender { Layout = patternLayout };
-            appender.AddAppender(traceAppender);
-
-            BasicConfigurator.Configure(appender);
         }
     }
 }

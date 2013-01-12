@@ -2,42 +2,35 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ConfigTransformationTool
+namespace OutcoldSolutions.ConfigTransformationTool
 {
     using System;
     using System.Collections.Generic;
     using System.Reflection;
 
-    using ConfigTransformationTool.Base;
-
-    using log4net;
-    using log4net.Config;
-
     internal class Program
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-
         private static int Main(string[] args)
         {
+            ArgumentsLoader argumentsLoader = new ArgumentsLoader();
+            argumentsLoader.Load(args);
+
+            var log = argumentsLoader.Verbose ? OutputLog.FromWriter(Console.Out) : OutputLog.Empty();
+
+            AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => log.WriteLine("UnhandledException: {0}.", eventArgs.ExceptionObject);
+
             try
             {
-                ArgumentsLoader argumentsLoader = new ArgumentsLoader();
-
-                XmlConfigurator.Configure();
-                AppDomain.CurrentDomain.UnhandledException += CurrentDomainUnhandledException;
-
-                argumentsLoader.Load(args);
-
                 if (argumentsLoader.IsAllRequiredParametersSet)
                 {
-                    TransformationTask task = new TransformationTask(
-                        argumentsLoader.SourceFilePath, argumentsLoader.TransformFilePath);
+                    var task = new TransformationTask(log, argumentsLoader.SourceFilePath, argumentsLoader.TransformFilePath);
 
                     IDictionary<string, string> parameters = new Dictionary<string, string>();
 
                     if (!string.IsNullOrWhiteSpace(argumentsLoader.ParametersString))
                     {
-                        ParametersParser.ReadParameters(argumentsLoader.ParametersString, parameters);
+                        var parser = new ParametersParser(log);
+                        parser.ReadParameters(argumentsLoader.ParametersString, parameters);
                     }
 
                     if (!string.IsNullOrWhiteSpace(argumentsLoader.ParametersFile))
@@ -62,7 +55,7 @@ namespace ConfigTransformationTool
             }
             catch (Exception e)
             {
-                Log.Fatal(e);
+                log.WriteLine("Unexpected exception: {0}.", e);
                 return 4;
             }
         }
@@ -124,11 +117,6 @@ namespace ConfigTransformationTool
             }
 
             return null;
-        }
-
-        private static void CurrentDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            Log.Fatal(e.ExceptionObject);
         }
     }
 }

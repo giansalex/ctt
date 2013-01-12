@@ -2,21 +2,23 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ConfigTransformationTool.Base
+namespace OutcoldSolutions.ConfigTransformationTool
 {
     using System;
     using System.Collections.Generic;
-    using System.Reflection;
     using System.Text;
-
-    using log4net;
 
     /// <summary>
     /// Parse string of parameters 
     /// </summary>
-    public static class ParametersParser
+    public class ParametersParser
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly OutputLog log;
+
+        public ParametersParser(OutputLog log)
+        {
+            this.log = log;
+        }
 
         /// <summary>
         /// Parse string of parameters <paramref name="parametersString"/> separated by semi ';'.
@@ -26,7 +28,7 @@ namespace ConfigTransformationTool.Base
         /// </summary>
         /// <param name="parametersString">String of parameters</param>
         /// <param name="parameters">All parameters will be read to current dictionary.</param>
-        public static void ReadParameters(string parametersString, IDictionary<string, string> parameters)
+        public void ReadParameters(string parametersString, IDictionary<string, string> parameters)
         {
             if (parameters == null)
             {
@@ -110,12 +112,9 @@ namespace ConfigTransformationTool.Base
 
             AddParameter(parameters, parameterName, parameterValue);
 
-            if (Log.IsDebugEnabled)
+            foreach (var parameter in parameters)
             {
-                foreach (var parameter in parameters)
-                {
-                    Log.DebugFormat("Parameter Name: '{0}', Value: '{1}'", parameter.Key, parameter.Value);
-                }
+                this.log.WriteLine("Parameter Name: '{0}', Value: '{1}'", parameter.Key, parameter.Value);
             }
         }
 

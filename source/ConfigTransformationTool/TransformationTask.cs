@@ -2,15 +2,12 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace ConfigTransformationTool.Base
+namespace OutcoldSolutions.ConfigTransformationTool
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Reflection;
     using System.Xml;
-
-    using log4net;
 
     using Microsoft.Web.XmlTransform;
 
@@ -20,28 +17,35 @@ namespace ConfigTransformationTool.Base
     /// </summary>
     public class TransformationTask
     {
-        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly OutputLog log;
 
-        private readonly TransformationLogger transfomrationLogger = new TransformationLogger();
+        private readonly TransformationLogger transfomrationLogger;
 
         private IDictionary<string, string> parameters;
 
         /// <summary>
         /// Empty constructor
         /// </summary>
-        public TransformationTask()
+        public TransformationTask(OutputLog log)
         {
+            if (log == null)
+            {
+                throw new ArgumentNullException("log");
+            }
+
+            this.log = log;
+            this.transfomrationLogger = new TransformationLogger(log);
         }
 
         /// <summary>
         /// Create new TransformationTask object and set values for <see cref="SourceFilePath"/> and <see cref="TransformFile"/>
         /// </summary>
+        /// <param name="log">The logger.</param>
         /// <param name="sourceFilePath">Source file path</param>
         /// <param name="transformFilePath">Transformation file path</param>
-        public TransformationTask(string sourceFilePath, string transformFilePath)
+        public TransformationTask(OutputLog log, string sourceFilePath, string transformFilePath)
+            : this(log)
         {
-            Log.Debug("Create Transformation Task.");
-
             this.SourceFilePath = sourceFilePath;
             this.TransformFile = transformFilePath;
         }
@@ -81,7 +85,7 @@ namespace ConfigTransformationTool.Base
                 throw new ArgumentException("Destination file can't be empty.", "destinationFilePath");
             }
 
-            Log.DebugFormat("Start tranformation to '{0}'.", destinationFilePath);
+            this.log.WriteLine("Start tranformation to '{0}'.", destinationFilePath);
 
             if (string.IsNullOrWhiteSpace(this.SourceFilePath) || !File.Exists(this.SourceFilePath))
             {
@@ -93,8 +97,8 @@ namespace ConfigTransformationTool.Base
                 throw new FileNotFoundException("Can't find transform  file.", this.TransformFile);
             }
 
-            Log.DebugFormat("Source file: '{0}'.", this.SourceFilePath);
-            Log.DebugFormat("Transform  file: '{0}'.", this.TransformFile);
+            this.log.WriteLine("Source file: '{0}'.", this.SourceFilePath);
+            this.log.WriteLine("Transform  file: '{0}'.", this.TransformFile);
 
             try
             {
@@ -124,7 +128,7 @@ namespace ConfigTransformationTool.Base
             }
             catch (Exception e)
             {
-                Log.Error(e);
+                this.log.WriteLine("Exception while transforming: {0}.", e);
                 return false;
             }
         }
