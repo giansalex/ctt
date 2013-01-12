@@ -4,11 +4,12 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 using log4net;
-using Microsoft.Web.Publishing.Tasks;
 
 namespace ConfigTransformationTool.Base
 {
-	/// <summary>
+    using Microsoft.Web.XmlTransform;
+
+    /// <summary>
 	/// Make transformation of file <see cref="SourceFilePath"/> with transform file <see cref="TransformFile"/>.
 	/// Look at http://msdn.microsoft.com/en-us/library/dd465326.aspx for syntax of transformation file.
 	/// </summary>

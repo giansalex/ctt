@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Reflection;
 using log4net;
-using Microsoft.Web.Publishing.Tasks;
+using Microsoft.Web.XmlTransform;
 
 namespace ConfigTransformationTool.Base
 {
-	// Simple implementation of logger
+    // Simple implementation of logger
 	public class TransformationLogger : IXmlTransformationLogger
 	{
 		private readonly static ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType); 
