@@ -88,7 +88,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
                 if (arg.Equals("v", StringComparison.OrdinalIgnoreCase) || arg.Equals("verbose", StringComparison.OrdinalIgnoreCase))
                 {
-                    this.ForceParametersTask = true;
+                    this.Verbose = true;
                 }
             }
         }
