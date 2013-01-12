@@ -1,47 +1,20 @@
-﻿using System;
-using System.IO;
-using ConfigTransformationTool.Base;
-using NUnit.Framework;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// Outcold Solutions (http://outcoldman.com)
+// --------------------------------------------------------------------------------------------------------------------
 
-// ReSharper disable InconsistentNaming
 namespace ConfigTransformationTool.Tests
 {
-	[TestFixture]
-	public class TransformationTaskSpec : BaseSpec
-	{
-		/// <summary>
-		/// Simple test 
-		/// </summary>
-		[Test]
-		public void Transfarmotaion_Should_Happend()
-		{
-			string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+    using System;
+    using System.IO;
 
-			string sourceFile = Path.Combine(baseDirectory, "Transfarmotaion_Should_Happend.config");
-			string transformFile =  Path.Combine(baseDirectory, "Transfarmotaion_Should_Happend_transform.config");
-			string resultFile =  Path.Combine(baseDirectory, "Transfarmotaion_Should_Happend_result.config");
+    using ConfigTransformationTool.Base;
 
-			// Create source file
-			WriteToFile(sourceFile, Source);
+    using NUnit.Framework;
 
-			// Create transform file
-			WriteToFile(transformFile, Transform);
-
-			TransformationTask task = new TransformationTask(sourceFile, transformFile);
-			Assert.IsTrue(task.Execute(resultFile));
-
-			string fileContent;
-
-			using (StreamReader reader = new StreamReader(resultFile))
-			{
-				fileContent = reader.ReadToEnd();
-			}
-
-			//Check that transformation happend
-			Assert.IsTrue(fileContent.Contains(@"value=""601"""));
-		}
-
-		private const string Source = @"<?xml version=""1.0""?>
+    [TestFixture]
+    public class TransformationTaskSpec : BaseSpec
+    {
+        private const string Source = @"<?xml version=""1.0""?>
 
 <configuration>
 
@@ -65,7 +38,7 @@ namespace ConfigTransformationTool.Tests
 	
 </configuration>";
 
-		private const string Transform = @"<?xml version=""1.0""?>
+        private const string Transform = @"<?xml version=""1.0""?>
 <configuration xmlns:xdt=""http://schemas.microsoft.com/XML-Document-Transform"">
 	
 	<custom>
@@ -80,5 +53,36 @@ namespace ConfigTransformationTool.Tests
 	
 </configuration>";
 
-	}
+        /// <summary>
+        /// Simple test 
+        /// </summary>
+        [Test]
+        public void Transfarmotaion_Should_Happend()
+        {
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            string sourceFile = Path.Combine(baseDirectory, "Transfarmotaion_Should_Happend.config");
+            string transformFile = Path.Combine(baseDirectory, "Transfarmotaion_Should_Happend_transform.config");
+            string resultFile = Path.Combine(baseDirectory, "Transfarmotaion_Should_Happend_result.config");
+
+            // Create source file
+            this.WriteToFile(sourceFile, Source);
+
+            // Create transform file
+            this.WriteToFile(transformFile, Transform);
+
+            TransformationTask task = new TransformationTask(sourceFile, transformFile);
+            Assert.IsTrue(task.Execute(resultFile));
+
+            string fileContent;
+
+            using (StreamReader reader = new StreamReader(resultFile))
+            {
+                fileContent = reader.ReadToEnd();
+            }
+
+            // Check that transformation happend
+            Assert.IsTrue(fileContent.Contains(@"value=""601"""));
+        }
+    }
 }

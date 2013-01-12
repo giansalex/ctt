@@ -14,22 +14,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{20402A
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5E619C56-396C-482C-B89C-2378EF5B1909}"
+	ProjectSection(SolutionItems) = preProject
+		Settings.StyleCop = Settings.StyleCop
+	EndProjectSection
+EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs14
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = ConfigTransformationTool\\ConfigTransformationTool.csproj
-		SccProjectName1 = ConfigTransformationTool
-		SccLocalPath1 = ConfigTransformationTool
-		SccProjectUniqueName2 = ConfigTransformationTool.Tests\\ConfigTransformationTool.Tests.csproj
-		SccProjectName2 = ConfigTransformationTool.Tests
-		SccLocalPath2 = ConfigTransformationTool.Tests
-		SccProjectUniqueName3 = ConfigTransformationTool.Base\\ConfigTransformationTool.Base.csproj
-		SccProjectName3 = ConfigTransformationTool.Base
-		SccLocalPath3 = ConfigTransformationTool.Base
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms

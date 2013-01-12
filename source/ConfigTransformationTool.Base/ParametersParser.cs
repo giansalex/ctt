@@ -1,120 +1,137 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using log4net;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// Outcold Solutions (http://outcoldman.com)
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ConfigTransformationTool.Base
 {
-	/// <summary>
-	/// Parse string of parameters 
-	/// </summary>
-	public static class ParametersParser
-	{
-		private readonly static ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using System.Text;
 
-		/// <summary>
-		/// Parse string of parameters <paramref name="parametersString"/> separated by semi ';'.
-		/// Value should be separated from name by colon ':'. 
-		/// If value has spaces or semi you can use quotes for value. 
-		/// You can escape symbols '\' and '"' with \.
-		/// </summary>
-		/// <param name="parametersString">String of parameters</param>
-		/// <param name="parameters">All parameters will be read to current dictionary.</param>
-		public static void ReadParameters(string parametersString, IDictionary<string, string> parameters)
-		{
-			if (parameters == null)
-				throw new ArgumentNullException("parameters");
+    using log4net;
 
-			if (string.IsNullOrWhiteSpace(parametersString)) 
-				return;
+    /// <summary>
+    /// Parse string of parameters 
+    /// </summary>
+    public static class ParametersParser
+    {
+        private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-			var source = parametersString.ToCharArray();
+        /// <summary>
+        /// Parse string of parameters <paramref name="parametersString"/> separated by semi ';'.
+        /// Value should be separated from name by colon ':'. 
+        /// If value has spaces or semi you can use quotes for value. 
+        /// You can escape symbols '\' and '"' with \.
+        /// </summary>
+        /// <param name="parametersString">String of parameters</param>
+        /// <param name="parameters">All parameters will be read to current dictionary.</param>
+        public static void ReadParameters(string parametersString, IDictionary<string, string> parameters)
+        {
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
 
-			int index = 0;
+            if (string.IsNullOrWhiteSpace(parametersString))
+            {
+                return;
+            }
 
-			bool fParameterNameRead = true;
-			bool fForceParameterValueRead = false;
+            var source = parametersString.ToCharArray();
 
-			StringBuilder parameterName = new StringBuilder();
-			StringBuilder parameterValue = new StringBuilder();
+            int index = 0;
 
-			while (index < source.Length)
-			{
-				if (fParameterNameRead && source[index] == ':')
-				{
-					fParameterNameRead = false;
-					index++;
+            bool fParameterNameRead = true;
+            bool fForceParameterValueRead = false;
 
-					if (index < source.Length && source[index] == '"')
-					{
-						fForceParameterValueRead = true;
-						index++;
-					}
+            StringBuilder parameterName = new StringBuilder();
+            StringBuilder parameterValue = new StringBuilder();
 
-					continue;
-				}
+            while (index < source.Length)
+            {
+                if (fParameterNameRead && source[index] == ':')
+                {
+                    fParameterNameRead = false;
+                    index++;
 
-				if ((!fForceParameterValueRead && source[index] == ';')
-					|| (fForceParameterValueRead && source[index] == '"' && ((index + 1) == source.Length || source[index + 1] == ';')))
-				{
-					AddParameter(parameters, parameterName, parameterValue);
-					index++;
-					if (fForceParameterValueRead)
-						index++;
-					parameterName.Clear();
-					parameterValue.Clear();
-					fParameterNameRead = true;
-					fForceParameterValueRead = false;
-					continue;
-				}
+                    if (index < source.Length && source[index] == '"')
+                    {
+                        fForceParameterValueRead = true;
+                        index++;
+                    }
 
-				// Check is this escape \{ \} \\
-				if (source[index] == '\\')
-				{
-					var nextIndex = index + 1;
-					if (nextIndex < source.Length)
-					{
-						var nextChar = source[nextIndex];
-						if (nextChar == '"' || nextChar == '\\')
-						{
-							index++;
-						}
-					}
-				}
+                    continue;
+                }
 
-				if (fParameterNameRead)
-				{
-					parameterName.Append(source[index]);
-				}
-				else
-				{
-					parameterValue.Append(source[index]);
-				}
+                if ((!fForceParameterValueRead && source[index] == ';')
+                    || (fForceParameterValueRead && source[index] == '"'
+                        && ((index + 1) == source.Length || source[index + 1] == ';')))
+                {
+                    AddParameter(parameters, parameterName, parameterValue);
+                    index++;
+                    if (fForceParameterValueRead)
+                    {
+                        index++;
+                    }
 
-				index++;
-			}
+                    parameterName.Clear();
+                    parameterValue.Clear();
+                    fParameterNameRead = true;
+                    fForceParameterValueRead = false;
+                    continue;
+                }
 
-			AddParameter(parameters, parameterName, parameterValue);
+                // Check is this escape \{ \} \\
+                if (source[index] == '\\')
+                {
+                    var nextIndex = index + 1;
+                    if (nextIndex < source.Length)
+                    {
+                        var nextChar = source[nextIndex];
+                        if (nextChar == '"' || nextChar == '\\')
+                        {
+                            index++;
+                        }
+                    }
+                }
 
-			if (Log.IsDebugEnabled)
-			{
-				foreach (var parameter in parameters)
-				{
-					Log.DebugFormat("Parameter Name: '{0}', Value: '{1}'", parameter.Key, parameter.Value);
-				}
-			}
-		}
+                if (fParameterNameRead)
+                {
+                    parameterName.Append(source[index]);
+                }
+                else
+                {
+                    parameterValue.Append(source[index]);
+                }
 
-		private static void AddParameter(IDictionary<string, string> parameters, StringBuilder parameterName, StringBuilder parameterValue)
-		{
-			var name = parameterName.ToString();
-			if (!string.IsNullOrWhiteSpace(name))
-			{
-				if (parameters.ContainsKey(name))
-					parameters.Remove(name);
-				parameters.Add(name, parameterValue.ToString());
-			}
-		}
-	}
+                index++;
+            }
+
+            AddParameter(parameters, parameterName, parameterValue);
+
+            if (Log.IsDebugEnabled)
+            {
+                foreach (var parameter in parameters)
+                {
+                    Log.DebugFormat("Parameter Name: '{0}', Value: '{1}'", parameter.Key, parameter.Value);
+                }
+            }
+        }
+
+        private static void AddParameter(
+            IDictionary<string, string> parameters, StringBuilder parameterName, StringBuilder parameterValue)
+        {
+            var name = parameterName.ToString();
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                if (parameters.ContainsKey(name))
+                {
+                    parameters.Remove(name);
+                }
+
+                parameters.Add(name, parameterValue.ToString());
+            }
+        }
+    }
 }

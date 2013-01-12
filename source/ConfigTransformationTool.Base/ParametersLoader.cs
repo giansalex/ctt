@@ -1,43 +1,60 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Xml.Linq;
+// --------------------------------------------------------------------------------------------------------------------
+// Outcold Solutions (http://outcoldman.com)
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ConfigTransformationTool.Base
 {
-	public class ParametersLoader
-	{
-		public static void LoadParameters(string parametersFile, IDictionary<string, string> parameters)
-		{
-			if (string.IsNullOrWhiteSpace(parametersFile))
-				throw new ArgumentException("parametersFile");
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Xml.Linq;
 
-			if (!File.Exists(parametersFile))
-				throw new FileNotFoundException(string.Format("Couldn't find file with parameters '{0}'.", parametersFile));
+    public class ParametersLoader
+    {
+        public static void LoadParameters(string parametersFile, IDictionary<string, string> parameters)
+        {
+            if (string.IsNullOrWhiteSpace(parametersFile))
+            {
+                throw new ArgumentException("parametersFile");
+            }
 
-			XDocument document = XDocument.Load(parametersFile);
-			XElement root = document.Element("parameters");
-			
-			if (root == null)
-				throw new FormatException("Couldn't find root element 'parameters'.");
+            if (!File.Exists(parametersFile))
+            {
+                throw new FileNotFoundException(
+                    string.Format("Couldn't find file with parameters '{0}'.", parametersFile));
+            }
 
-			foreach(XElement element in root.Elements())
-			{
-				if (element.Name != "param")
-					throw new FormatException("All parameters elements should be 'param'.");
+            XDocument document = XDocument.Load(parametersFile);
+            XElement root = document.Element("parameters");
 
-				XAttribute attrName = element.Attribute("name");
+            if (root == null)
+            {
+                throw new FormatException("Couldn't find root element 'parameters'.");
+            }
 
-				if (attrName == null)
-					throw new FormatException("Attribute 'name' is required for 'param' element.");
+            foreach (XElement element in root.Elements())
+            {
+                if (element.Name != "param")
+                {
+                    throw new FormatException("All parameters elements should be 'param'.");
+                }
 
-				XAttribute attrValue = element.Attribute("value");
+                XAttribute attrName = element.Attribute("name");
 
-				if (attrValue == null)
-					throw new FormatException("Attribute 'value' is required for 'param' element.");
+                if (attrName == null)
+                {
+                    throw new FormatException("Attribute 'name' is required for 'param' element.");
+                }
 
-				parameters.Add(attrName.Value, attrValue.Value);
-			}
-		}
-	}
+                XAttribute attrValue = element.Attribute("value");
+
+                if (attrValue == null)
+                {
+                    throw new FormatException("Attribute 'value' is required for 'param' element.");
+                }
+
+                parameters.Add(attrName.Value, attrValue.Value);
+            }
+        }
+    }
 }

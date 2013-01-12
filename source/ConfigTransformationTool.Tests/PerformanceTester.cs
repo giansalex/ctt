@@ -1,82 +1,98 @@
-﻿using System;
-using System.Diagnostics;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// Outcold Solutions (http://outcoldman.com)
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ConfigTransformationTool.Tests
 {
-	/// <summary>
-	/// http://lukencode.com/2010/03/28/c-micro-performance-testing-class/
-	/// </summary>
-	public class PerformanceTester
-	{
-		public TimeSpan TotalTime { get; private set; }
-		public TimeSpan AverageTime { get; private set; }
-		public TimeSpan MinTime { get; private set; }
-		public TimeSpan MaxTime { get; private set; }
-		public Action Action { get; set; }
+    using System;
+    using System.Diagnostics;
 
-		public PerformanceTester(Action action)
-		{
-			Action = action;
-			MaxTime = TimeSpan.MinValue;
-			MinTime = TimeSpan.MaxValue;
-		}
+    /// <summary>
+    /// http://lukencode.com/2010/03/28/c-micro-performance-testing-class/
+    /// </summary>
+    public class PerformanceTester
+    {
+        public PerformanceTester(Action action)
+        {
+            this.Action = action;
+            this.MaxTime = TimeSpan.MinValue;
+            this.MinTime = TimeSpan.MaxValue;
+        }
 
-		/// <summary>
-		/// 	Micro performance testing
-		/// </summary>
-		public void MeasureExecTime()
-		{
-			var sw = Stopwatch.StartNew();
-			Action();
-			sw.Stop();
-			AverageTime = sw.Elapsed;
-			TotalTime = sw.Elapsed;
-		}
+        public TimeSpan TotalTime { get; private set; }
 
-		/// <summary>
-		/// 	Micro performance testing
-		/// </summary>
-		/// <param name = "iterations">the number of times to perform action</param>
-		/// <returns></returns>
-		public void MeasureExecTime(int iterations)
-		{
-			Action(); // warm up
-			var sw = Stopwatch.StartNew();
-			for (int i = 0; i < iterations; i++)
-			{
-				Action();
-			}
-			sw.Stop();
-			AverageTime = new TimeSpan(sw.Elapsed.Ticks/iterations);
-			TotalTime = sw.Elapsed;
-		}
+        public TimeSpan AverageTime { get; private set; }
 
-		/// <summary>
-		/// 	Micro performance testing, also measures
-		/// 	max and min execution times
-		/// </summary>
-		/// <param name = "iterations">the number of times to perform action</param>
-		public void MeasureExecTimeWithMetrics(int iterations)
-		{
-			TimeSpan total = new TimeSpan(0);
+        public TimeSpan MinTime { get; private set; }
 
-			Action(); // warm up
-			for (int i = 0; i < iterations; i++)
-			{
-				var sw = Stopwatch.StartNew();
+        public TimeSpan MaxTime { get; private set; }
 
-				Action();
+        public Action Action { get; set; }
 
-				sw.Stop();
-				TimeSpan thisIteration = sw.Elapsed;
-				total += thisIteration;
+        /// <summary>
+        /// Micro performance testing
+        /// </summary>
+        public void MeasureExecTime()
+        {
+            var sw = Stopwatch.StartNew();
+            this.Action();
+            sw.Stop();
+            this.AverageTime = sw.Elapsed;
+            this.TotalTime = sw.Elapsed;
+        }
 
-				if (thisIteration > MaxTime) MaxTime = thisIteration;
-				if (thisIteration < MinTime) MinTime = thisIteration;
-			}
+        /// <summary>
+        /// Micro performance testing
+        /// </summary>
+        /// <param name = "iterations">the number of times to perform action</param>
+        /// <returns></returns>
+        public void MeasureExecTime(int iterations)
+        {
+            Action(); // warm up
+            var sw = Stopwatch.StartNew();
+            for (int i = 0; i < iterations; i++)
+            {
+                Action();
+            }
 
-			TotalTime = total;
-			AverageTime = new TimeSpan(total.Ticks/iterations);
-		}
-	}
+            sw.Stop();
+            this.AverageTime = new TimeSpan(sw.Elapsed.Ticks / iterations);
+            this.TotalTime = sw.Elapsed;
+        }
+
+        /// <summary>
+        /// Micro performance testing, also measures
+        /// max and min execution times
+        /// </summary>
+        /// <param name = "iterations">the number of times to perform action</param>
+        public void MeasureExecTimeWithMetrics(int iterations)
+        {
+            TimeSpan total = new TimeSpan(0);
+
+            Action(); // warm up
+            for (int i = 0; i < iterations; i++)
+            {
+                var sw = Stopwatch.StartNew();
+
+                Action();
+
+                sw.Stop();
+                TimeSpan thisIteration = sw.Elapsed;
+                total += thisIteration;
+
+                if (thisIteration > this.MaxTime)
+                {
+                    this.MaxTime = thisIteration;
+                }
+
+                if (thisIteration < this.MinTime)
+                {
+                    this.MinTime = thisIteration;
+                }
+            }
+
+            this.TotalTime = total;
+            this.AverageTime = new TimeSpan(total.Ticks / iterations);
+        }
+    }
 }

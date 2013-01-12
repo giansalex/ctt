@@ -1,76 +1,94 @@
-﻿namespace ConfigTransformationTool
+﻿// --------------------------------------------------------------------------------------------------------------------
+// Outcold Solutions (http://outcoldman.com)
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ConfigTransformationTool
 {
-	/// <summary>
-	/// Command line helper. Load parameters from comman line arguments.
-	/// </summary>
-	internal class ArgumentsLoader
-	{
-		/// <summary>
-		/// Load arguments from command line
-		/// </summary>
-		/// <param name="args"></param>
-		public void Load(string[] args)
-		{
-			DestinationFilePath = string.Empty;
-			SourceFilePath = string.Empty;
-			TransformFilePath = string.Empty;
-			ParametersString = string.Empty;
-			ParametersFile = string.Empty;
-			ForceParametersTask = false;
+    using System;
 
-			foreach (string arg in args)
-			{
-				if (arg.StartsWith("s:") || arg.StartsWith("source:"))
-					SourceFilePath = GetFileNameFromArguments(arg);
+    /// <summary>
+    /// Command line helper. Load parameters from comman line arguments.
+    /// </summary>
+    internal class ArgumentsLoader
+    {
+        public bool IsAllRequiredParametersSet
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(this.SourceFilePath)
+                    && !string.IsNullOrWhiteSpace(this.TransformFilePath)
+                    && !string.IsNullOrWhiteSpace(this.DestinationFilePath);
+            }
+        }
 
-				if (arg.StartsWith("t:") || arg.StartsWith("transform:"))
-					TransformFilePath = GetFileNameFromArguments(arg);
+        public string SourceFilePath { get; private set; }
 
-				if (arg.StartsWith("d:") || arg.StartsWith("destination:"))
-					DestinationFilePath = GetFileNameFromArguments(arg);
+        public string TransformFilePath { get; private set; }
 
-				if (arg.StartsWith("p:") || arg.StartsWith("parameters:"))
-					ParametersString = GetValueFromArguments(arg);
+        public string DestinationFilePath { get; private set; }
 
-				if (arg.StartsWith("pf:") || arg.StartsWith("parameters.file:"))
-					ParametersFile = GetValueFromArguments(arg);
+        public string ParametersString { get; private set; }
 
-				if (arg.StartsWith("fpt"))
-					ForceParametersTask = true;
-			}
-		}
+        public string ParametersFile { get; private set; }
 
-		public bool IsAllRequiredParametersSet
-		{
-			get
-			{
-				return (!string.IsNullOrWhiteSpace(SourceFilePath)
-				        && !string.IsNullOrWhiteSpace(TransformFilePath)
-				        && !string.IsNullOrWhiteSpace(DestinationFilePath));
-			}
-		}
+        public bool ForceParametersTask { get; private set; }
 
-		public string SourceFilePath { get; private set; }
+        /// <summary>
+        /// Load arguments from command line
+        /// </summary>
+        /// <param name="args"></param>
+        public void Load(string[] args)
+        {
+            this.DestinationFilePath = string.Empty;
+            this.SourceFilePath = string.Empty;
+            this.TransformFilePath = string.Empty;
+            this.ParametersString = string.Empty;
+            this.ParametersFile = string.Empty;
+            this.ForceParametersTask = false;
 
-		public string TransformFilePath { get; private set; }
-		
-		public string DestinationFilePath { get; private set; }
+            foreach (string arg in args)
+            {
+                if (arg.StartsWith("s:") || arg.StartsWith("source:"))
+                {
+                    this.SourceFilePath = GetFileNameFromArguments(arg);
+                }
 
-		public string ParametersString { get; private set; }
+                if (arg.StartsWith("t:") || arg.StartsWith("transform:"))
+                {
+                    this.TransformFilePath = GetFileNameFromArguments(arg);
+                }
 
-		public string ParametersFile { get; private set; }
+                if (arg.StartsWith("d:") || arg.StartsWith("destination:"))
+                {
+                    this.DestinationFilePath = GetFileNameFromArguments(arg);
+                }
 
-		public bool ForceParametersTask { get; private set; }
+                if (arg.StartsWith("p:") || arg.StartsWith("parameters:"))
+                {
+                    this.ParametersString = GetValueFromArguments(arg);
+                }
 
-		private static string GetFileNameFromArguments(string arg)
-		{
-			return GetValueFromArguments(arg).Trim('"');
-		}
+                if (arg.StartsWith("pf:") || arg.StartsWith("parameters.file:"))
+                {
+                    this.ParametersFile = GetValueFromArguments(arg);
+                }
 
-		private static string GetValueFromArguments(string arg)
-		{
-			int startIndex = arg.IndexOf(":") + 1;
-			return arg.Substring(startIndex, arg.Length - startIndex);
-		}
-	}
+                if (arg.StartsWith("fpt"))
+                {
+                    this.ForceParametersTask = true;
+                }
+            }
+        }
+
+        private static string GetFileNameFromArguments(string arg)
+        {
+            return GetValueFromArguments(arg).Trim('"');
+        }
+
+        private static string GetValueFromArguments(string arg)
+        {
+            int startIndex = arg.IndexOf(":", StringComparison.Ordinal) + 1;
+            return arg.Substring(startIndex, arg.Length - startIndex);
+        }
+    }
 }
