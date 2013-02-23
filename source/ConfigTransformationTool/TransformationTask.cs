@@ -7,6 +7,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Text;
     using System.Xml;
 
     using Microsoft.Web.XmlTransform;
@@ -113,7 +114,26 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
             try
             {
-                var transformFile = ReadContent(this.TransformFile);
+                Encoding encoding = Encoding.Unicode;
+
+                XmlDocument document = new XmlDocument()
+                                           {
+                                               PreserveWhitespace = this.PreserveWhitespace
+                                           };
+
+                document.Load(this.SourceFilePath);
+                if (document.FirstChild.NodeType == XmlNodeType.XmlDeclaration)
+                {
+                    var xmlDeclaration = (XmlDeclaration)document.FirstChild;
+                    if (!string.IsNullOrEmpty(xmlDeclaration.Encoding))
+                    {
+                        encoding = Encoding.GetEncoding(xmlDeclaration.Encoding);
+                    }
+                }
+
+                this.log.WriteLine("Transformation task is using encoding '{0}'. Change encoding in source file if you want to change encoding.", encoding);
+
+                var transformFile = File.ReadAllText(this.TransformFile, encoding);
 
                 if ((this.parameters != null && this.parameters.Count > 0) || forceParametersTask)
                 {
@@ -126,27 +146,17 @@ namespace OutcoldSolutions.ConfigTransformationTool
                     transformFile = parametersTask.ApplyParameters(transformFile);
                 }
 
-                XmlDocument document = new XmlDocument()
-                                           {
-                                               PreserveWhitespace = this.PreserveWhitespace
-                                           };
-
-                document.Load(this.SourceFilePath);
-
                 XmlTransformation transformation = new XmlTransformation(transformFile, false, this.transfomrationLogger);
 
                 bool result = transformation.Apply(document);
-
-                using (StreamWriter writer = new StreamWriter(destinationFilePath, false))
+                
+                var outerXml = document.OuterXml;
+                if (this.PreserveWhitespace)
                 {
-                    var outerXml = document.OuterXml;
-                    if (this.PreserveWhitespace)
-                    {
-                        outerXml = outerXml.Replace("&#xD;", "\r").Replace("&#xA;", "\n");
-                    }
-
-                    writer.Write(outerXml);
+                    outerXml = outerXml.Replace("&#xD;", "\r").Replace("&#xA;", "\n");
                 }
+
+                File.WriteAllText(destinationFilePath, outerXml, encoding);
 
                 return result;
             }
@@ -154,14 +164,6 @@ namespace OutcoldSolutions.ConfigTransformationTool
             {
                 this.log.WriteLine("Exception while transforming: {0}.", e);
                 return false;
-            }
-        }
-
-        private static string ReadContent(string path)
-        {
-            using (StreamReader reader = new StreamReader(path))
-            {
-                return reader.ReadToEnd();
             }
         }
     }

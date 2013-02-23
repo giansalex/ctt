@@ -57,19 +57,19 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 if (arg.IndexOf("s:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("source:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    this.SourceFilePath = GetFileNameFromArguments(arg);
+                    this.SourceFilePath = GetValueFromArguments(arg);
                 }
 
                 if (arg.IndexOf("t:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("transform:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    this.TransformFilePath = GetFileNameFromArguments(arg);
+                    this.TransformFilePath = GetValueFromArguments(arg);
                 }
 
                 if (arg.IndexOf("d:", StringComparison.OrdinalIgnoreCase) == 0 
                     || arg.IndexOf("destination:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    this.DestinationFilePath = GetFileNameFromArguments(arg);
+                    this.DestinationFilePath = GetValueFromArguments(arg);
                 }
 
                 if (arg.IndexOf("p:", StringComparison.OrdinalIgnoreCase) == 0
@@ -101,15 +101,10 @@ namespace OutcoldSolutions.ConfigTransformationTool
             }
         }
 
-        private static string GetFileNameFromArguments(string arg)
-        {
-            return GetValueFromArguments(arg).Trim('"');
-        }
-
         private static string GetValueFromArguments(string arg)
         {
             int startIndex = arg.IndexOf(":", StringComparison.Ordinal) + 1;
-            return arg.Substring(startIndex, arg.Length - startIndex);
+            return arg.Substring(startIndex, arg.Length - startIndex).Trim('"');
         }
     }
 }

@@ -84,6 +84,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 "  fpt  - (Optional parameter) force parameters task \r\n    (if parameters argument is empty, but need to apply default values),\r\n    default is false");
             Console.WriteLine(
                 "  verbose (v)  - (Optional parameter) verbose output,\r\n    default is false");
+            Console.WriteLine(
+                "  preservewhitespace (pw)  - (Optional parameter) preserve whitespace in xml element and xml attribute values,\r\n    default is false");
             Console.WriteLine();
             Console.WriteLine("Examples:");
             Console.WriteLine();
