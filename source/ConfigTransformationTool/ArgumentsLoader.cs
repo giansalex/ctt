@@ -11,7 +11,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
     /// </summary>
     internal class ArgumentsLoader
     {
-        public bool IsAllRequiredParametersSet
+        public bool AreAllRequiredParametersSet
         {
             get
             {
@@ -35,6 +35,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
         public bool Verbose { get; private set; }
 
+        public bool PreserveWhitespace { get; private set; }
+
         /// <summary>
         /// Load arguments from command line
         /// </summary>
@@ -48,6 +50,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
             this.ParametersFile = string.Empty;
             this.ForceParametersTask = false;
             this.Verbose = false;
+            this.PreserveWhitespace = false;
 
             foreach (string arg in args)
             {
@@ -89,6 +92,11 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 if (arg.Equals("v", StringComparison.OrdinalIgnoreCase) || arg.Equals("verbose", StringComparison.OrdinalIgnoreCase))
                 {
                     this.Verbose = true;
+                }
+
+                if (arg.Equals("pw", StringComparison.OrdinalIgnoreCase) || arg.Equals("preservewhitespace", StringComparison.OrdinalIgnoreCase))
+                {
+                    this.PreserveWhitespace = true;
                 }
             }
         }

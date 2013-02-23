@@ -21,9 +21,13 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
             try
             {
-                if (argumentsLoader.IsAllRequiredParametersSet)
+                if (argumentsLoader.AreAllRequiredParametersSet)
                 {
-                    var task = new TransformationTask(log, argumentsLoader.SourceFilePath, argumentsLoader.TransformFilePath);
+                    var task = new TransformationTask(
+                                        log, 
+                                        argumentsLoader.SourceFilePath, 
+                                        argumentsLoader.TransformFilePath, 
+                                        argumentsLoader.PreserveWhitespace);
 
                     IDictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -83,11 +87,11 @@ namespace OutcoldSolutions.ConfigTransformationTool
             Console.WriteLine();
             Console.WriteLine("Examples:");
             Console.WriteLine();
-            Console.WriteLine(string.Format("{0} source:\"source.config\"", exeFile));
+            Console.WriteLine("{0} source:\"source.config\"", exeFile);
             Console.WriteLine("\ttransform:\"transform.config\"");
             Console.WriteLine("\tdestination:\"destination.config\"");
             Console.WriteLine();
-            Console.WriteLine(string.Format("{0} s:\"source.config\"", exeFile));
+            Console.WriteLine("{0} s:\"source.config\"", exeFile);
             Console.WriteLine("\tt:\"transform.config\"");
             Console.WriteLine("\td:\"destination.config\"");
             Console.WriteLine("\tp:Parameter1:\"Value of parameter1\";Parameter2:Value2");

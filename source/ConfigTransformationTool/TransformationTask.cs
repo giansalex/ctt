@@ -43,11 +43,17 @@ namespace OutcoldSolutions.ConfigTransformationTool
         /// <param name="log">The logger.</param>
         /// <param name="sourceFilePath">Source file path</param>
         /// <param name="transformFilePath">Transformation file path</param>
-        public TransformationTask(OutputLog log, string sourceFilePath, string transformFilePath)
+        /// <param name="preserveWhitespace">Force to preserve all whitespaces in Xml Element and Xml Attributes values.</param>
+        public TransformationTask(
+            OutputLog log, 
+            string sourceFilePath, 
+            string transformFilePath,
+            bool preserveWhitespace)
             : this(log)
         {
             this.SourceFilePath = sourceFilePath;
             this.TransformFile = transformFilePath;
+            this.PreserveWhitespace = preserveWhitespace;
         }
 
         /// <summary>
@@ -62,6 +68,11 @@ namespace OutcoldSolutions.ConfigTransformationTool
         /// See http://msdn.microsoft.com/en-us/library/dd465326.aspx for syntax of transformation file
         /// </remarks>
         public string TransformFile { get; set; }
+
+        /// <summary>
+        /// Force to preserve all whitespaces in Xml Element and Xml Attributes values.
+        /// </summary>
+        public bool PreserveWhitespace { get; set; }
 
         /// <summary>
         /// Set parameters and values for transform
@@ -115,14 +126,27 @@ namespace OutcoldSolutions.ConfigTransformationTool
                     transformFile = parametersTask.ApplyParameters(transformFile);
                 }
 
-                XmlDocument document = new XmlDocument();
+                XmlDocument document = new XmlDocument()
+                                           {
+                                               PreserveWhitespace = this.PreserveWhitespace
+                                           };
+
                 document.Load(this.SourceFilePath);
 
                 XmlTransformation transformation = new XmlTransformation(transformFile, false, this.transfomrationLogger);
 
                 bool result = transformation.Apply(document);
 
-                document.Save(destinationFilePath);
+                using (StreamWriter writer = new StreamWriter(destinationFilePath, false))
+                {
+                    var outerXml = document.OuterXml;
+                    if (this.PreserveWhitespace)
+                    {
+                        outerXml = outerXml.Replace("&#xD;", "\r").Replace("&#xA;", "\n");
+                    }
+
+                    writer.Write(outerXml);
+                }
 
                 return result;
             }
