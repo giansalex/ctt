@@ -37,6 +37,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
         public bool PreserveWhitespace { get; private set; }
 
+        public bool Indent { get; private set; }
+
         /// <summary>
         /// Load arguments from command line
         /// </summary>
@@ -51,6 +53,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
             this.ForceParametersTask = false;
             this.Verbose = false;
             this.PreserveWhitespace = false;
+            this.Indent = false;
 
             foreach (string arg in args)
             {
@@ -97,6 +100,11 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 if (arg.Equals("pw", StringComparison.OrdinalIgnoreCase) || arg.Equals("preservewhitespace", StringComparison.OrdinalIgnoreCase))
                 {
                     this.PreserveWhitespace = true;
+                }
+
+                if (arg.Equals("indent", StringComparison.OrdinalIgnoreCase))
+                {
+                    this.Indent = true;
                 }
             }
         }

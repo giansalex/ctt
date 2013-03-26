@@ -2,6 +2,9 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Text.RegularExpressions;
+using System.Xml.Linq;
+
 namespace OutcoldSolutions.ConfigTransformationTool
 {
     using System;
@@ -74,6 +77,11 @@ namespace OutcoldSolutions.ConfigTransformationTool
         /// Force to preserve all whitespaces in Xml Element and Xml Attributes values.
         /// </summary>
         public bool PreserveWhitespace { get; set; }
+
+        /// <summary>
+        /// Get or sets a value indicating wether the output Xml will be indented.
+        /// </summary>
+        public bool Indent { get; set; }
 
         /// <summary>
         /// Set parameters and values for transform
@@ -149,8 +157,14 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 XmlTransformation transformation = new XmlTransformation(transformFile, false, this.transfomrationLogger);
 
                 bool result = transformation.Apply(document);
-                
+
                 var outerXml = document.OuterXml;
+
+                if (this.Indent)
+                {
+                    outerXml = GetIndentedOuterXml(outerXml, encoding);
+                }
+
                 if (this.PreserveWhitespace)
                 {
                     outerXml = outerXml.Replace("&#xD;", "\r").Replace("&#xA;", "\n");
@@ -165,6 +179,35 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 this.log.WriteLine("Exception while transforming: {0}.", e);
                 return false;
             }
+        }
+
+        private static string GetIndentedOuterXml(string xml, Encoding encoding)
+        {
+            var xmlWriterSettings = new XmlWriterSettings
+                {
+                    Indent = true,
+                    IndentChars = "    ",
+                    Encoding = encoding
+                };
+
+            using (var buffer = new StringWriter())
+            {
+                using (var xmlWriter = XmlWriter.Create(buffer, xmlWriterSettings))
+                {
+                    XDocument.Parse(xml).WriteTo(xmlWriter);
+                }
+
+                return WorkAroundToRestoreProperXmlDeclarationTag(xml, buffer.ToString());
+            }
+        }
+
+        private static string WorkAroundToRestoreProperXmlDeclarationTag(string xml, string indentedXml)
+        {
+            var xmlRegex = new Regex(@"^(<\?xml.*\?>)", RegexOptions.Singleline);
+            var match = xmlRegex.Match(xml);
+            return !match.Success
+                ? indentedXml
+                : xmlRegex.Replace(indentedXml, match.Groups[1].Value);
         }
     }
 }

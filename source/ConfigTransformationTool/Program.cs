@@ -29,6 +29,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
                                         argumentsLoader.TransformFilePath, 
                                         argumentsLoader.PreserveWhitespace);
 
+                    task.Indent = argumentsLoader.Indent;
+
                     IDictionary<string, string> parameters = new Dictionary<string, string>();
 
                     if (!string.IsNullOrWhiteSpace(argumentsLoader.ParametersString))

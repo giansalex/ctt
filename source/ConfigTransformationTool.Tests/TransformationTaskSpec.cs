@@ -77,6 +77,160 @@ namespace OutcoldSolutions.ConfigTransformationTool.Suites
         }
 
         [Test]
+        public void TransfarmotaionWithNewLineBetweenTags_ShouldKeepNewLines()
+        {
+            const string Source = @"<?xml version=""1.0""?>
+<configuration>
+    <configSections>
+        <sectionGroup name=""userSettings"" type=""System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"">
+            <section name=""MyNamespace.Properties.Settings"" type=""System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"" allowExeDefinition=""MachineToLocalUser"" requirePermission=""false"" />
+        </sectionGroup>
+    </configSections>
+    <userSettings>
+        <MyNamespace.Properties.Settings>
+            <setting name=""MyConfiguration"" serializeAs=""String"">
+                <value>ThisWillBeReplaced</value>
+            </setting>
+        </MyNamespace.Properties.Settings>
+    </userSettings>
+</configuration>";
+
+            const string Transform = @"<?xml version=""1.0""?>
+<configuration xmlns:xdt=""http://schemas.microsoft.com/XML-Document-Transform"">
+    <configSections>
+        <sectionGroup name=""userSettings"" type=""System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"">
+            <section name=""MyNamespace.Properties.Settings"" type=""System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"" allowExeDefinition=""MachineToLocalUser"" requirePermission=""false"" />
+        </sectionGroup>
+    </configSections>
+    <userSettings>
+        <MyNamespace.Properties.Settings>
+            <setting name=""MyConfiguration"" serializeAs=""String"" xdt:Transform=""Replace""  xdt:Locator=""Match(name)"">
+                <value>ThisWasReplaced</value>
+            </setting>
+        </MyNamespace.Properties.Settings>
+    </userSettings>
+</configuration>";
+
+            const string Expected = @"<?xml version=""1.0""?>
+<configuration>
+    <configSections>
+        <sectionGroup name=""userSettings"" type=""System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"">
+            <section name=""MyNamespace.Properties.Settings"" type=""System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"" allowExeDefinition=""MachineToLocalUser"" requirePermission=""false"" />
+        </sectionGroup>
+    </configSections>
+    <userSettings>
+        <MyNamespace.Properties.Settings>
+            <setting name=""MyConfiguration"" serializeAs=""String"">
+                <value>ThisWasReplaced</value>
+            </setting>
+        </MyNamespace.Properties.Settings>
+    </userSettings>
+</configuration>";
+
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            string sourceFile = Path.Combine(baseDirectory, "Transfarmotaion_Should_Happend.config");
+            string transformFile = Path.Combine(baseDirectory, "Transfarmotaion_Should_Happend_transform.config");
+            string resultFile = Path.Combine(baseDirectory, "Transfarmotaion_Should_Happend_result.config");
+
+            // Create source file
+            this.WriteToFile(sourceFile, Source);
+
+            // Create transform file
+            this.WriteToFile(transformFile, Transform);
+
+            var sut = new TransformationTask(this.Log, sourceFile, transformFile, preserveWhitespace: true)
+                {
+                    Indent = true
+                };
+
+            // Act
+            var actualResult = sut.Execute(resultFile);
+            var actualContents = File.ReadAllText(resultFile);
+
+            // Assert
+            Assert.IsTrue(actualResult);
+            Assert.AreEqual(Expected, actualContents);
+        }
+
+        [Test]
+        public void TransfarmotaionWithNewLineBetweenTags_ShouldKeepXmlDeclaration()
+        {
+            const string Source = @"<?xml version=""1.0"" encoding=""utf-16""?>
+<configuration>
+    <configSections>
+        <sectionGroup name=""userSettings"" type=""System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"">
+            <section name=""MyNamespace.Properties.Settings"" type=""System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"" allowExeDefinition=""MachineToLocalUser"" requirePermission=""false"" />
+        </sectionGroup>
+    </configSections>
+    <userSettings>
+        <MyNamespace.Properties.Settings>
+            <setting name=""MyConfiguration"" serializeAs=""String"">
+                <value>ThisWillBeReplaced</value>
+            </setting>
+        </MyNamespace.Properties.Settings>
+    </userSettings>
+</configuration>";
+
+            const string Transform = @"<?xml version=""1.0""?>
+<configuration xmlns:xdt=""http://schemas.microsoft.com/XML-Document-Transform"">
+    <configSections>
+        <sectionGroup name=""userSettings"" type=""System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"">
+            <section name=""MyNamespace.Properties.Settings"" type=""System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"" allowExeDefinition=""MachineToLocalUser"" requirePermission=""false"" />
+        </sectionGroup>
+    </configSections>
+    <userSettings>
+        <MyNamespace.Properties.Settings>
+            <setting name=""MyConfiguration"" serializeAs=""String"" xdt:Transform=""Replace""  xdt:Locator=""Match(name)"">
+                <value>ThisWasReplaced</value>
+            </setting>
+        </MyNamespace.Properties.Settings>
+    </userSettings>
+</configuration>";
+
+            const string Expected = @"<?xml version=""1.0"" encoding=""utf-16""?>
+<configuration>
+    <configSections>
+        <sectionGroup name=""userSettings"" type=""System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"">
+            <section name=""MyNamespace.Properties.Settings"" type=""System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"" allowExeDefinition=""MachineToLocalUser"" requirePermission=""false"" />
+        </sectionGroup>
+    </configSections>
+    <userSettings>
+        <MyNamespace.Properties.Settings>
+            <setting name=""MyConfiguration"" serializeAs=""String"">
+                <value>ThisWasReplaced</value>
+            </setting>
+        </MyNamespace.Properties.Settings>
+    </userSettings>
+</configuration>";
+
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            string sourceFile = Path.Combine(baseDirectory, "Transfarmotaion_Should_Happend.config");
+            string transformFile = Path.Combine(baseDirectory, "Transfarmotaion_Should_Happend_transform.config");
+            string resultFile = Path.Combine(baseDirectory, "Transfarmotaion_Should_Happend_result.config");
+
+            // Create source file
+            this.WriteToFile(sourceFile, Source);
+
+            // Create transform file
+            this.WriteToFile(transformFile, Transform);
+
+            var sut = new TransformationTask(this.Log, sourceFile, transformFile, preserveWhitespace: true)
+            {
+                Indent = true
+            };
+
+            // Act
+            var actualResult = sut.Execute(resultFile);
+            var actualContents = File.ReadAllText(resultFile);
+
+            // Assert
+            Assert.IsTrue(actualResult);
+            Assert.AreEqual(Expected, actualContents);
+        }
+
+        [Test]
         public void TransfarmotaionWithNewLineInValue_ShouldKeepNewLine()
         {
             const string Source = @"<?xml version=""1.0""?>
