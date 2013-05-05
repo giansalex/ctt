@@ -202,7 +202,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
                     XDocument.Parse(xml).WriteTo(xmlWriter);
                 }
 
-                return WorkAroundToRestoreProperXmlDeclarationTag(xml, buffer.ToString());
+                return this.WorkAroundToRestoreProperXmlDeclarationTag(xml, buffer.ToString());
             }
         }
 
