@@ -93,9 +93,9 @@ namespace OutcoldSolutions.ConfigTransformationTool
             Console.WriteLine(
                 "  preservewhitespace (pw)  - (Optional parameter) preserve whitespace in xml element and xml attribute values,\r\n    default is false");
             Console.WriteLine(
-                "  indent (i)  - (Optional parameter) indicating wether the output Xml will be indented,\r\n    default is false");
+                "  indent (i)  - (Optional parameter) indicating wether the output xml will be indented,\r\n    default is false");
             Console.WriteLine(
-                "  indentchars (ic)  - (Optional parameter) if parameter 'indent' is using you can specify which indent chars you can use instead of default value,\r\n    default is 4 whitespaces");
+                "  indentchars:{chars} (ic)  - (Optional parameter) specify indent chars for xml intending,\r\n    default is 4 whitespaces");
             Console.WriteLine();
             Console.WriteLine("Examples:");
             Console.WriteLine();
