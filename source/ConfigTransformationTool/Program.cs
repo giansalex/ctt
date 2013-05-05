@@ -29,7 +29,11 @@ namespace OutcoldSolutions.ConfigTransformationTool
                                         argumentsLoader.TransformFilePath, 
                                         argumentsLoader.PreserveWhitespace);
 
-                    task.Indent = argumentsLoader.Indent;
+                    if (argumentsLoader.Indent)
+                    {
+                        task.Indent = argumentsLoader.Indent;
+                        task.IndentChars = argumentsLoader.IndentChars;
+                    }
 
                     IDictionary<string, string> parameters = new Dictionary<string, string>();
 
@@ -88,6 +92,10 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 "  verbose (v)  - (Optional parameter) verbose output,\r\n    default is false");
             Console.WriteLine(
                 "  preservewhitespace (pw)  - (Optional parameter) preserve whitespace in xml element and xml attribute values,\r\n    default is false");
+            Console.WriteLine(
+                "  indent (i)  - (Optional parameter) indicating wether the output Xml will be indented,\r\n    default is false");
+            Console.WriteLine(
+                "  indentchars (ic)  - (Optional parameter) if parameter 'indent' is using you can specify which indent chars you can use instead of default value,\r\n    default is 4 whitespaces");
             Console.WriteLine();
             Console.WriteLine("Examples:");
             Console.WriteLine();

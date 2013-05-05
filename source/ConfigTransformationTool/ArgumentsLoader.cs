@@ -39,6 +39,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
         public bool Indent { get; private set; }
 
+        public string IndentChars { get; private set; }
+
         /// <summary>
         /// Load arguments from command line
         /// </summary>
@@ -92,19 +94,28 @@ namespace OutcoldSolutions.ConfigTransformationTool
                     this.ForceParametersTask = true;
                 }
 
-                if (arg.Equals("v", StringComparison.OrdinalIgnoreCase) || arg.Equals("verbose", StringComparison.OrdinalIgnoreCase))
+                if (arg.Equals("v", StringComparison.OrdinalIgnoreCase) 
+                    || arg.Equals("verbose", StringComparison.OrdinalIgnoreCase))
                 {
                     this.Verbose = true;
                 }
 
-                if (arg.Equals("pw", StringComparison.OrdinalIgnoreCase) || arg.Equals("preservewhitespace", StringComparison.OrdinalIgnoreCase))
+                if (arg.Equals("pw", StringComparison.OrdinalIgnoreCase) 
+                    || arg.Equals("preservewhitespace", StringComparison.OrdinalIgnoreCase))
                 {
                     this.PreserveWhitespace = true;
                 }
 
-                if (arg.Equals("indent", StringComparison.OrdinalIgnoreCase))
+                if (arg.Equals("i", StringComparison.OrdinalIgnoreCase)
+                    || arg.Equals("indent", StringComparison.OrdinalIgnoreCase))
                 {
                     this.Indent = true;
+                }
+
+                if (arg.IndexOf("ic:", StringComparison.OrdinalIgnoreCase) == 0
+                    || arg.IndexOf("indentchars:", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    this.IndentChars = GetValueFromArguments(arg);
                 }
             }
         }

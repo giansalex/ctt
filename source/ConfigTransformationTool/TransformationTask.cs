@@ -2,16 +2,15 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
-
 namespace OutcoldSolutions.ConfigTransformationTool
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Xml;
+    using System.Xml.Linq;
 
     using Microsoft.Web.XmlTransform;
 
@@ -39,6 +38,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
             this.log = log;
             this.transfomrationLogger = new TransformationLogger(log);
+            this.IndentChars = "    ";
         }
 
         /// <summary>
@@ -82,6 +82,11 @@ namespace OutcoldSolutions.ConfigTransformationTool
         /// Get or sets a value indicating wether the output Xml will be indented.
         /// </summary>
         public bool Indent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the character string to use when indenting. 4 spaces is a default value.
+        /// </summary>
+        public string IndentChars { get; set; }
 
         /// <summary>
         /// Set parameters and values for transform
@@ -162,7 +167,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
                 if (this.Indent)
                 {
-                    outerXml = GetIndentedOuterXml(outerXml, encoding);
+                    outerXml = this.GetIndentedOuterXml(outerXml, encoding);
                 }
 
                 if (this.PreserveWhitespace)
@@ -181,14 +186,14 @@ namespace OutcoldSolutions.ConfigTransformationTool
             }
         }
 
-        private static string GetIndentedOuterXml(string xml, Encoding encoding)
+        private string GetIndentedOuterXml(string xml, Encoding encoding)
         {
             var xmlWriterSettings = new XmlWriterSettings
-                {
-                    Indent = true,
-                    IndentChars = "    ",
-                    Encoding = encoding
-                };
+            {
+                Indent = true,
+                IndentChars = this.IndentChars,
+                Encoding = encoding
+            };
 
             using (var buffer = new StringWriter())
             {
@@ -201,7 +206,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
             }
         }
 
-        private static string WorkAroundToRestoreProperXmlDeclarationTag(string xml, string indentedXml)
+        private string WorkAroundToRestoreProperXmlDeclarationTag(string xml, string indentedXml)
         {
             var xmlRegex = new Regex(@"^(<\?xml.*\?>)", RegexOptions.Singleline);
             var match = xmlRegex.Match(xml);
