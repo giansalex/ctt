@@ -191,7 +191,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
             var xmlWriterSettings = new XmlWriterSettings
             {
                 Indent = true,
-                IndentChars = this.IndentChars,
+                IndentChars = this.IndentChars ?? new string(' ', 4),
                 Encoding = encoding
             };
 
