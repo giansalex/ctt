@@ -3,6 +3,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Config Transformation Tool")]
@@ -20,3 +21,5 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyVersion("1.4.1.30505")]
 [assembly: AssemblyFileVersion("1.4.1.0")]
+
+[assembly: InternalsVisibleTo("OutcoldSolutions.ConfigTransformationTool.Suites")]

@@ -13,7 +13,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
         private static int Main(string[] args)
         {
             ArgumentsLoader argumentsLoader = new ArgumentsLoader();
-            argumentsLoader.Load(args);
+            if (!argumentsLoader.Load(args))
+                return 5;
 
             var log = argumentsLoader.Verbose ? OutputLog.FromWriter(Console.Out) : OutputLog.Empty();
 
@@ -34,6 +35,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
                         task.Indent = argumentsLoader.Indent;
                         task.IndentChars = argumentsLoader.IndentChars;
                     }
+
+                    task.DefaultEncoding = argumentsLoader.DefaultEncoding;
 
                     IDictionary<string, string> parameters = new Dictionary<string, string>();
 
