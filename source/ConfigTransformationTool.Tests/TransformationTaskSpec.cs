@@ -465,5 +465,41 @@ e"" />
 
             Assert.IsTrue(task.Execute(resultFile));
         }
+
+        [Test]
+        public void Execute_IndentTrue_SourceFileDoesNotDefineXmlHeader_NoXmlHeaderInResultsFile()
+        {
+            const string Source = @"<connectionStrings>
+        <x></x>
+</connectionStrings>";
+
+            const string Transform = @"<?xml version=""1.0"" encoding=""UTF-8""?>
+<connectionStrings xdt:Transform=""Replace"" xmlns:xdt=""http://schemas.microsoft.com/XML-Document-Transform"">
+        <a>aaa</a>
+</connectionStrings>";
+
+            const string Result = @"<connectionStrings>
+    <a>aaa</a>
+</connectionStrings>";
+
+            var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            var sourceFile = Path.Combine(baseDirectory, "Execute_IndentTrueIndentCharsNull_DoesNotThrowException-Source.config");
+            var transformFile = Path.Combine(baseDirectory, "Execute_IndentTrueIndentCharsNull_DoesNotThrowException-Transform.config");
+            var resultFile = Path.Combine(baseDirectory, "Execute_IndentTrueIndentCharsNull_DoesNotThrowException-Result.config");
+
+            this.WriteToFile(sourceFile, Source, Encoding.UTF8);
+            this.WriteToFile(transformFile, Transform, Encoding.UTF8);
+
+            var task = new TransformationTask(this.Log, sourceFile, transformFile, preserveWhitespace: true)
+                {
+                    Indent = true
+                };
+
+            Assert.IsTrue(task.Execute(resultFile));
+
+            var fileContent = File.ReadAllText(resultFile, Encoding.UTF8);
+            Assert.That(fileContent, Is.EqualTo(Result));
+        }
     }
 }

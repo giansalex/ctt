@@ -208,9 +208,13 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
             using (var buffer = new StringWriter())
             {
+                var xdoc = XDocument.Parse(xml);
+
+                xmlWriterSettings.OmitXmlDeclaration = xdoc.Declaration == null;
+
                 using (var xmlWriter = XmlWriter.Create(buffer, xmlWriterSettings))
                 {
-                    XDocument.Parse(xml).WriteTo(xmlWriter);
+                    xdoc.WriteTo(xmlWriter);
                 }
 
                 return this.WorkAroundToRestoreProperXmlDeclarationTag(xml, buffer.ToString());
