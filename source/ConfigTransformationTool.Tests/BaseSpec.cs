@@ -20,7 +20,7 @@ namespace OutcoldSolutions.ConfigTransformationTool.Suites
         [SetUp]
         public virtual void SetUp()
         {
-            this.Log = OutputLog.FromWriter(Console.Out);
+            this.Log = OutputLog.FromWriter(Console.Out, Console.Error);
         }
 
         /// <summary>

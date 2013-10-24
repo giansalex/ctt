@@ -181,7 +181,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
             }
             catch (Exception e)
             {
-                this.log.WriteLine("Exception while transforming: {0}.", e);
+                this.log.WriteErrorLine("Exception while transforming: {0}.", e);
                 return false;
             }
         }

@@ -15,9 +15,9 @@ namespace OutcoldSolutions.ConfigTransformationTool
             ArgumentsLoader argumentsLoader = new ArgumentsLoader();
             argumentsLoader.Load(args);
 
-            var log = argumentsLoader.Verbose ? OutputLog.FromWriter(Console.Out) : OutputLog.Empty();
+            var log = argumentsLoader.Verbose ? OutputLog.FromWriter(Console.Out, Console.Error) : OutputLog.ErrorOnly(Console.Error);
 
-            AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => log.WriteLine("UnhandledException: {0}.", eventArgs.ExceptionObject);
+            AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => log.WriteErrorLine("UnhandledException: {0}.", eventArgs.ExceptionObject);
 
             try
             {
@@ -65,7 +65,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
             }
             catch (Exception e)
             {
-                log.WriteLine("Unexpected exception: {0}.", e);
+                log.WriteErrorLine("Unexpected exception: {0}.", e);
                 return 4;
             }
         }
