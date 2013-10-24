@@ -13,7 +13,10 @@ namespace OutcoldSolutions.ConfigTransformationTool
         private static int Main(string[] args)
         {
             ArgumentsLoader argumentsLoader = new ArgumentsLoader();
-            argumentsLoader.Load(args);
+            if (!argumentsLoader.Load(args))
+            {
+                return 4;
+            }
 
             var log = argumentsLoader.Verbose ? OutputLog.FromWriter(Console.Out, Console.Error) : OutputLog.ErrorOnly(Console.Error);
 
@@ -33,6 +36,11 @@ namespace OutcoldSolutions.ConfigTransformationTool
                     {
                         task.Indent = argumentsLoader.Indent;
                         task.IndentChars = argumentsLoader.IndentChars;
+                    }
+
+                    if (argumentsLoader.DefaultEncoding != null)
+                    {
+                        task.DefaultEncoding = argumentsLoader.DefaultEncoding;
                     }
 
                     IDictionary<string, string> parameters = new Dictionary<string, string>();
@@ -96,6 +104,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 "  indent (i)  - (Optional parameter) indicating wether the output xml will be indented,\r\n    default is false");
             Console.WriteLine(
                 "  indentchars:{chars} (ic)  - (Optional parameter) specify indent chars for xml intending,\r\n    default is 4 whitespaces");
+            Console.WriteLine(
+                "  encoding:{encoding} (e)  - (Optional parameter) specify default encoding for xml files (utf8, utf16, etc),\r\n    default is unicode");
             Console.WriteLine();
             Console.WriteLine("Examples:");
             Console.WriteLine();

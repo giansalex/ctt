@@ -5,6 +5,7 @@
 namespace OutcoldSolutions.ConfigTransformationTool
 {
     using System;
+    using System.Text;
 
     /// <summary>
     /// Command line helper. Load parameters from comman line arguments.
@@ -41,11 +42,13 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
         public string IndentChars { get; private set; }
 
+        public Encoding DefaultEncoding { get; set; }
+
         /// <summary>
         /// Load arguments from command line
         /// </summary>
         /// <param name="args"></param>
-        public void Load(string[] args)
+        public bool Load(string[] args)
         {
             this.DestinationFilePath = string.Empty;
             this.SourceFilePath = string.Empty;
@@ -73,7 +76,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
                     continue;
                 }
 
-                if (arg.IndexOf("d:", StringComparison.OrdinalIgnoreCase) == 0 
+                if (arg.IndexOf("d:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("destination:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     this.DestinationFilePath = GetValueFromArguments(arg);
@@ -100,14 +103,14 @@ namespace OutcoldSolutions.ConfigTransformationTool
                     continue;
                 }
 
-                if (arg.Equals("v", StringComparison.OrdinalIgnoreCase) 
+                if (arg.Equals("v", StringComparison.OrdinalIgnoreCase)
                     || arg.Equals("verbose", StringComparison.OrdinalIgnoreCase))
                 {
                     this.Verbose = true;
                     continue;
                 }
 
-                if (arg.Equals("pw", StringComparison.OrdinalIgnoreCase) 
+                if (arg.Equals("pw", StringComparison.OrdinalIgnoreCase)
                     || arg.Equals("preservewhitespace", StringComparison.OrdinalIgnoreCase))
                 {
                     this.PreserveWhitespace = true;
@@ -127,7 +130,31 @@ namespace OutcoldSolutions.ConfigTransformationTool
                     this.IndentChars = GetValueFromArguments(arg);
                     continue;
                 }
+
+                if (arg.IndexOf("e:", StringComparison.OrdinalIgnoreCase) == 0
+                    || arg.IndexOf("encoding:", StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    var name = GetValueFromArguments(arg);
+
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        Console.Error.WriteLine("encoding: or e: requires an parameter value.");
+                        return false;
+                    }
+
+                    try
+                    {
+                        this.DefaultEncoding = GetEncoding(name);
+                    }
+                    catch
+                    {
+                        Console.Error.WriteLine("Cannot load encoding: {0}", name);
+                        return false;
+                    }
+                }
             }
+
+            return true;
         }
 
         private static string GetValueFromArguments(string arg)
@@ -142,6 +169,22 @@ namespace OutcoldSolutions.ConfigTransformationTool
             }
 
             return result;
+        }
+
+        private static Encoding GetEncoding(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) return null;
+
+            // Encoding.GetEncoding is stupid. "UTF8" or "utf7" names cannot be used. Expects "UTF-8" or "utf-7"
+            switch (name.ToLowerInvariant())
+            {
+                case "utf7": return Encoding.UTF7;
+                case "utf8": return Encoding.UTF8;
+                case "utf16": return Encoding.Unicode;
+                case "utf32": return Encoding.UTF32;
+            }
+
+            return Encoding.GetEncoding(name);
         }
     }
 }

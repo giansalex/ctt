@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArgumentsLoaderTests.cs" />
     <Compile Include="BaseSpec.cs" />
     <Compile Include="ParametersLoaderSpec.cs" />
     <Compile Include="ParametersParserSpec.cs" />

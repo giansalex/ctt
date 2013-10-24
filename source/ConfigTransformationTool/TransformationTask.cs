@@ -26,6 +26,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
         private IDictionary<string, string> parameters;
 
+        private Encoding defaultEncoding;
+
         /// <summary>
         /// Empty constructor
         /// </summary>
@@ -89,6 +91,15 @@ namespace OutcoldSolutions.ConfigTransformationTool
         public string IndentChars { get; set; }
 
         /// <summary>
+        /// Gets or sets the default encoding to use.
+        /// </summary>
+        public Encoding DefaultEncoding
+        {
+            get { return this.defaultEncoding ?? Encoding.Unicode; }
+            set { this.defaultEncoding = value; }
+        }
+
+        /// <summary>
         /// Set parameters and values for transform
         /// </summary>
         /// <param name="parameters">Dictionary of parameters with values.</param>
@@ -127,7 +138,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
             try
             {
-                Encoding encoding = Encoding.Unicode;
+                Encoding encoding = this.DefaultEncoding;
 
                 XmlDocument document = new XmlDocument()
                                            {
@@ -144,7 +155,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
                     }
                 }
 
-                this.log.WriteLine("Transformation task is using encoding '{0}'. Change encoding in source file if you want to change encoding.", encoding);
+                this.log.WriteLine("Transformation task is using encoding '{0}'. Change encoding in source file, or use the 'encoding' parameter if you want to change encoding.", encoding);
 
                 var transformFile = File.ReadAllText(this.TransformFile, encoding);
 
@@ -191,7 +202,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
             var xmlWriterSettings = new XmlWriterSettings
             {
                 Indent = true,
-                IndentChars = this.IndentChars,
+                IndentChars = this.IndentChars ?? new string(' ', 4),
                 Encoding = encoding
             };
 
@@ -208,10 +219,10 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
         private string WorkAroundToRestoreProperXmlDeclarationTag(string xml, string indentedXml)
         {
-            var xmlRegex = new Regex(@"^(<\?xml.*\?>)", RegexOptions.Singleline);
+            var xmlRegex = new Regex(@"^(<\?xml.*\?>\s*)", RegexOptions.Singleline);
             var match = xmlRegex.Match(xml);
             return !match.Success
-                ? indentedXml
+                ? xmlRegex.Replace(indentedXml, string.Empty)
                 : xmlRegex.Replace(indentedXml, match.Groups[1].Value);
         }
     }
