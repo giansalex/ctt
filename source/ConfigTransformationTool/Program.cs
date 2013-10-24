@@ -105,7 +105,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
             Console.WriteLine(
                 "  indentchars:{chars} (ic)  - (Optional parameter) specify indent chars for xml intending,\r\n    default is 4 whitespaces");
             Console.WriteLine(
-                "  encoding:{encoding} (e)  - (Optional parameter) specify default encoding for xml files (utf8, utf16, etc),\r\n    default is unicode");
+                "  encoding:{encoding} (e)  - (Optional parameter) specify default encoding for xml files (utf8, utf16, etc),\r\n    default is utf8");
             Console.WriteLine();
             Console.WriteLine("Examples:");
             Console.WriteLine();

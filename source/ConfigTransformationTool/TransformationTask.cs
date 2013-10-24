@@ -95,7 +95,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
         /// </summary>
         public Encoding DefaultEncoding
         {
-            get { return this.defaultEncoding ?? Encoding.Unicode; }
+            get { return this.defaultEncoding ?? Encoding.UTF8; }
             set { this.defaultEncoding = value; }
         }
 
