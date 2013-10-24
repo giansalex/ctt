@@ -78,5 +78,20 @@ namespace OutcoldSolutions.ConfigTransformationTool.Suites
             Assert.AreEqual("Value1", parameters["Parameter1"]);
             Assert.AreEqual("12\"1.2\"32", parameters["Parameter2"]);
         }
+
+        /// <summary>
+        /// Verify that parameters values with ampersands are valid.
+        /// </summary>
+        [Test]
+        public void ReadParameters_InputStringContainsAmpersand()
+        {
+            const string ParametersLine = @"Parameter1:Value1;Parameter2:""p$amp;wd"";";
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>();
+            this.parser.ReadParameters(ParametersLine, parameters);
+
+            Assert.AreEqual("Value1", parameters["Parameter1"]);
+            Assert.AreEqual("p$amp;wd", parameters["Parameter2"]);
+        }
     }
 }

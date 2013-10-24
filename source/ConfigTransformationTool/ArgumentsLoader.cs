@@ -63,59 +63,69 @@ namespace OutcoldSolutions.ConfigTransformationTool
                     || arg.IndexOf("source:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     this.SourceFilePath = GetValueFromArguments(arg);
+                    continue;
                 }
 
                 if (arg.IndexOf("t:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("transform:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     this.TransformFilePath = GetValueFromArguments(arg);
+                    continue;
                 }
 
                 if (arg.IndexOf("d:", StringComparison.OrdinalIgnoreCase) == 0 
                     || arg.IndexOf("destination:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     this.DestinationFilePath = GetValueFromArguments(arg);
+                    continue;
                 }
 
                 if (arg.IndexOf("p:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("parameters:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     this.ParametersString = GetValueFromArguments(arg);
+                    continue;
                 }
 
                 if (arg.IndexOf("pf:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("parameters.file:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     this.ParametersFile = GetValueFromArguments(arg);
+                    continue;
                 }
 
                 if (arg.Equals("fpt", StringComparison.OrdinalIgnoreCase))
                 {
                     this.ForceParametersTask = true;
+                    continue;
                 }
 
                 if (arg.Equals("v", StringComparison.OrdinalIgnoreCase) 
                     || arg.Equals("verbose", StringComparison.OrdinalIgnoreCase))
                 {
                     this.Verbose = true;
+                    continue;
                 }
 
                 if (arg.Equals("pw", StringComparison.OrdinalIgnoreCase) 
                     || arg.Equals("preservewhitespace", StringComparison.OrdinalIgnoreCase))
                 {
                     this.PreserveWhitespace = true;
+                    continue;
                 }
 
                 if (arg.Equals("i", StringComparison.OrdinalIgnoreCase)
                     || arg.Equals("indent", StringComparison.OrdinalIgnoreCase))
                 {
                     this.Indent = true;
+                    continue;
                 }
 
                 if (arg.IndexOf("ic:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("indentchars:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     this.IndentChars = GetValueFromArguments(arg);
+                    continue;
                 }
             }
         }
@@ -123,7 +133,15 @@ namespace OutcoldSolutions.ConfigTransformationTool
         private static string GetValueFromArguments(string arg)
         {
             int startIndex = arg.IndexOf(":", StringComparison.Ordinal) + 1;
-            return arg.Substring(startIndex, arg.Length - startIndex).Trim('"');
+            string result = arg.Substring(startIndex, arg.Length - startIndex);
+
+            // Do smart quotes trimming, only if we have quotes from both sides
+            while (result.Length > 1 && result.IndexOf('"') == 0 && result.LastIndexOf('"') == (result.Length - 1))
+            {
+                result = result.Substring(1, result.Length - 2);
+            }
+
+            return result;
         }
     }
 }
