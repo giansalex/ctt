@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("b2f553de-ccb1-4f3c-9b6f-93051e06257d")]
 
-[assembly: AssemblyVersion("1.4.1.30505")]
-[assembly: AssemblyFileVersion("1.4.1.0")]
+[assembly: AssemblyVersion("1.5.0.31024")]
+[assembly: AssemblyFileVersion("1.5.0.0")]
 
 [assembly: InternalsVisibleTo("OutcoldSolutions.ConfigTransformationTool.Suites")]
