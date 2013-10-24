@@ -17,3 +17,5 @@ WinAppPackages
 *.opensdf
 *.sdf
 Thumbs.db
+*.exe
+source/Examples/*/d.config
