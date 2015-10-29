@@ -43,6 +43,10 @@ namespace OutcoldSolutions.ConfigTransformationTool
             return new OutputLog(writer, errorStream);
         }
 
+        public static OutputLog NoLogs()
+        {
+            return new OutputLog(null, null);
+        }
         public void WriteLine(string message, params object[] parameters)
         {
             if (this.outputStream != null)

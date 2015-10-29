@@ -36,6 +36,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
         public bool Verbose { get; private set; }
 
+        public bool Quiet { get; private set; }
+
         public bool PreserveWhitespace { get; private set; }
 
         public bool Indent { get; private set; }
@@ -151,6 +153,13 @@ namespace OutcoldSolutions.ConfigTransformationTool
                         Console.Error.WriteLine("Cannot load encoding: {0}", name);
                         return false;
                     }
+                }
+
+                if (arg.Equals("q", StringComparison.OrdinalIgnoreCase)
+                || arg.Equals("quiet", StringComparison.OrdinalIgnoreCase))
+                {
+                    this.Quiet = true;
+                    continue;
                 }
             }
 

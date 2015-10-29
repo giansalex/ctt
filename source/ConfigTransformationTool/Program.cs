@@ -18,7 +18,13 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 return 4;
             }
 
-            var log = argumentsLoader.Verbose ? OutputLog.FromWriter(Console.Out, Console.Error) : OutputLog.ErrorOnly(Console.Error);
+            OutputLog log = null;
+            if (argumentsLoader.Verbose)
+                log = OutputLog.FromWriter(Console.Out, Console.Error);
+            else if (argumentsLoader.Quiet)
+                log = OutputLog.NoLogs();
+            else
+                log = OutputLog.ErrorOnly(Console.Error);
 
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => log.WriteErrorLine("UnhandledException: {0}.", eventArgs.ExceptionObject);
 
@@ -27,9 +33,9 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 if (argumentsLoader.AreAllRequiredParametersSet)
                 {
                     var task = new TransformationTask(
-                                        log, 
-                                        argumentsLoader.SourceFilePath, 
-                                        argumentsLoader.TransformFilePath, 
+                                        log,
+                                        argumentsLoader.SourceFilePath,
+                                        argumentsLoader.TransformFilePath,
                                         argumentsLoader.PreserveWhitespace);
 
                     if (argumentsLoader.Indent)
@@ -98,6 +104,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 "  fpt  - (Optional parameter) force parameters task \r\n    (if parameters argument is empty, but need to apply default values),\r\n    default is false");
             Console.WriteLine(
                 "  verbose (v)  - (Optional parameter) verbose output,\r\n    default is false");
+            Console.WriteLine(
+              "  quiet (q)  - (Optional parameter) no output,\r\n    default is false");
             Console.WriteLine(
                 "  preservewhitespace (pw)  - (Optional parameter) preserve whitespace in xml element and xml attribute values,\r\n    default is false");
             Console.WriteLine(
