@@ -7,7 +7,7 @@
     [TestFixture]
     public class ArgumentsLoaderTests
     {
-        public IEnumerable Load_Encoding_SetsDefaultEncoding_TestCases
+        public static IEnumerable Load_Encoding_SetsDefaultEncoding_TestCases
         {
             get
             {
