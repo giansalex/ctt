@@ -1,4 +1,5 @@
 # XDT Transformation Tool
+[![Build status](https://ci.appveyor.com/api/projects/status/jojpj3hrtka55akt?svg=true)](https://ci.appveyor.com/project/giansalex/ctt)   
 
 XDT Transformation tool is a command tool based on [XDT (web.config) transform engine](https://nuget.org/packages/Microsoft.Web.Xdt), which allows you to run XDT transformation on any XML files.
 

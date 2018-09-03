@@ -1,0 +1,7 @@
+configuration: Release
+
+before_build:
+  - nuget restore source/ConfigTransformationTool.sln
+
+build:
+  verbosity: minimal
