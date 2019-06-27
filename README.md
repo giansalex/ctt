@@ -14,3 +14,6 @@ If you want to know more about XDT Transformation Syntax, follow this link [Depl
 ctt source:"Web.config" transform:"Web.Release.config" destination:"dist\Web.config" pw
 ```
 > Flag **pw** preserve whitespace, more options `ctt --help`.
+
+
+[Download from Latest Build](https://ci.appveyor.com/project/giansalex/ctt/build/artifacts)
