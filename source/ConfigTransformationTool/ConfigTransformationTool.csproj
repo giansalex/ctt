@@ -10,7 +10,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>OutcoldSolutions.ConfigTransformationTool</RootNamespace>
-    <AssemblyName>ctt.console</AssemblyName>
+    <AssemblyName>ctt</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
