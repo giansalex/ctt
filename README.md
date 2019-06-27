@@ -6,3 +6,11 @@ XDT Transformation tool is a command tool based on [XDT (web.config) transform e
 Scott Guthrie: _"In most real-world deployment scenarios, the web.config file you use for development is different than the one you use for production deployment. Typically you want to change environment settings like database connection-strings, making sure debug is turned off, and enabling custom errors so that end-users (and hackers) don’t see the internals of your application."_
 
 If you want to know more about XDT Transformation Syntax, follow this link [Deployment Web Application Project](https://msdn.microsoft.com/en-us/library/dd465326.aspx).
+
+
+## Usage
+
+```
+ctt source:"Web.config" transform:"Web.Release.config" destination:"dist\Web.config" pw
+```
+> Flag **pw** preserve whitespace, more options `ctt --help`.
