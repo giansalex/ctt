@@ -5,3 +5,7 @@ before_build:
 
 build:
   verbosity: minimal
+
+artifacts:
+  - path: source\ConfigTransformationTool\bin\$(configuration)\ctt.exe
+    name: CttConsole
