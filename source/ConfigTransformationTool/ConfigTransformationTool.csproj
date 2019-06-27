@@ -115,10 +115,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <UsingTask TaskName="ILMerge.MSBuild.Tasks.ILMerge" AssemblyFile="..\packages\ILMerge.MSBuild.Tasks.1.0.0.3\tools\ILMerge.MSBuild.Tasks.dll" />
-  <ItemGroup>
-    <MergeAsm Include="$(TargetDir)\ctt.console.exe" />
-    <MergeAsm Include="$(TargetDir)\Microsoft.Web.XmlTransform.dll" />
-  </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
