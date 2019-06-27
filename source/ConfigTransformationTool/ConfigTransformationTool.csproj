@@ -126,7 +126,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <UsingTask TaskName="ILMerge.MSBuild.Tasks.ILMerge" AssemblyFile="..\packages\ILMerge.MSBuild.Tasks.1.0.0.3\tools\ILMerge.MSBuild.Tasks.dll" />
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
@@ -139,7 +138,6 @@
   </Target>
   -->
   <Target Name="AfterBuild">
-    <ILMerge InputAssemblies="@(MergeAsm)" OutputFile="$(TargetDir)\ctt.exe" TargetKind="Exe" />
   </Target>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -148,5 +146,5 @@
     <Error Condition="!Exists('..\packages\Costura.Fody.4.0.0\build\Costura.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Costura.Fody.4.0.0\build\Costura.Fody.props'))" />
     <Error Condition="!Exists('..\packages\Fody.5.1.1\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.5.1.1\build\Fody.targets'))" />
   </Target>
-  <Import Project="..\packages\Fody.5.1.1\build\Fody.targets" Condition="Exists('..\packages\Fody.5.1.1\build\Fody.targets')" />
+  <Import Project="..\packages\Fody.5.1.1\build\Fody.targets" Condition="Exists('..\packages\Fody.5.1.1\build\Fody.targets') And '$(Configuration)' == 'Release'" />
 </Project>
