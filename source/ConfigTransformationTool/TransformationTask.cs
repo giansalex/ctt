@@ -33,7 +33,11 @@ namespace OutcoldSolutions.ConfigTransformationTool
         /// </summary>
         public TransformationTask(OutputLog log)
         {
-            _log = log ?? throw new ArgumentNullException(nameof(log));
+            if (log == null)
+            {
+                throw new ArgumentNullException(nameof(log));
+            }
+            _log = log;
             _transformationLogger = new TransformationLogger(log);
             IndentChars = "    ";
         }
