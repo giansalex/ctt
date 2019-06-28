@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>ctt</id>
+    <version>1.0.0</version>
+    <owners>Giancarlos Salas</owners>
+    <title>Config Transformation Tool</title>
+    <authors>Giancarlos Salas</authors>
+    <projectUrl>https://github.com/giansalex/ctt/</projectUrl>
+    <iconUrl>https://rawcdn.githack.com/giansalex/ctt/500eea4d2f34e5549493b7ab065751d2bdd852dc/favicon.ico</iconUrl>
+    <licenseUrl>https://github.com/giansalex/ctt/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <projectSourceUrl>https://github.com/giansalex/ctt/</projectSourceUrl>
+    <packageSourceUrl>https://github.com/giansalex/ctt/tree/master/.chocolatey/</packageSourceUrl>
+    <bugTrackerUrl>https://github.com/giansalex/ctt/issues</bugTrackerUrl>
+    <tags>config transformation xdt</tags>
+    <summary>Config Transformation Tool</summary>
+    <description>Command tool based on [XDT (web.config) transform engine](https://nuget.org/packages/Microsoft.Web.Xdt), which allows you to run XDT transformation on any XML files.</description>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>

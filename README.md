@@ -7,6 +7,12 @@ Scott Guthrie: _"In most real-world deployment scenarios, the web.config file yo
 
 If you want to know more about XDT Transformation Syntax, follow this link [Deployment Web Application Project](https://msdn.microsoft.com/en-us/library/dd465326.aspx).
 
+# Install
+Using [chocolatey.org](https://chocolatey.org/packages/ctt/).
+```
+choco install ctt
+```
+Also, you can download from [latest Build](https://ci.appveyor.com/project/giansalex/ctt/build/artifacts).
 
 ## Usage
 
@@ -15,5 +21,5 @@ ctt source:"Web.config" transform:"Web.Release.config" destination:"dist\Web.con
 ```
 > Flag **pw** preserve whitespace, more options `ctt --help`.
 
-
-[Download from Latest Build](https://ci.appveyor.com/project/giansalex/ctt/build/artifacts)
+## Reference
+- [Original Source](http://ctt.codeplex.com)
