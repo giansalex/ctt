@@ -13,7 +13,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
     /// </summary>
     public class ParametersTask
     {
-        private IDictionary<string, string> parameters;
+        private IDictionary<string, string> _parameters;
 
         /// <summary>
         /// Set parameters
@@ -23,18 +23,18 @@ namespace OutcoldSolutions.ConfigTransformationTool
         {
             if (parameters == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException(nameof(parameters));
             }
 
-            if (this.parameters == null)
+            if (_parameters == null)
             {
-                this.parameters = new Dictionary<string, string>(parameters);
+                _parameters = new Dictionary<string, string>(parameters);
             }
             else
             {
                 foreach (var parameter in parameters)
                 {
-                    this.parameters.Add(parameter);
+                    _parameters.Add(parameter);
                 }
             }
         }
@@ -70,9 +70,9 @@ namespace OutcoldSolutions.ConfigTransformationTool
                                                     : null;
 
                     string parameterValue = null;
-                    if (this.parameters != null && this.parameters.ContainsKey(parameterName))
+                    if (_parameters != null && _parameters.ContainsKey(parameterName))
                     {
-                        parameterValue = this.parameters[parameterName];
+                        parameterValue = _parameters[parameterName];
                     }
 
                     // Put "value" or "default value" or "string which was here"

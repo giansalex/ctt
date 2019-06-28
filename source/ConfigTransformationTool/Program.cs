@@ -12,13 +12,13 @@ namespace OutcoldSolutions.ConfigTransformationTool
     {
         private static int Main(string[] args)
         {
-            ArgumentsLoader argumentsLoader = new ArgumentsLoader();
+            var argumentsLoader = new ArgumentsLoader();
             if (!argumentsLoader.Load(args))
             {
                 return 4;
             }
 
-            OutputLog log = null;
+            OutputLog log;
             if (argumentsLoader.Verbose)
                 log = OutputLog.FromWriter(Console.Out, Console.Error);
             else if (argumentsLoader.Quiet)
@@ -135,7 +135,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
             object[] attributes = asm.GetCustomAttributes(typeof(AssemblyTitleAttribute), true);
             if (attributes.Length > 0 && attributes[0] is AssemblyTitleAttribute)
             {
-                return (attributes[0] as AssemblyTitleAttribute).Title;
+                return ((AssemblyTitleAttribute) attributes[0]).Title;
             }
 
             return null;
@@ -145,7 +145,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
         {
             if (asm != null && !string.IsNullOrEmpty(asm.FullName))
             {
-                string[] parts = asm.FullName.Split(',');
+                var parts = asm.FullName.Split(',');
                 if (parts.Length > 1)
                 {
                     return parts[1].Trim();

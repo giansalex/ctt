@@ -13,11 +13,11 @@ namespace OutcoldSolutions.ConfigTransformationTool
     /// </summary>
     public class ParametersParser
     {
-        private readonly OutputLog log;
+        private readonly OutputLog _log;
 
         public ParametersParser(OutputLog log)
         {
-            this.log = log;
+            _log = log;
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
             foreach (var parameter in parameters)
             {
-                this.log.WriteLine("Parameter Name: '{0}', Value: '{1}'", parameter.Key, parameter.Value);
+                _log.WriteLine("Parameter Name: '{0}', Value: '{1}'", parameter.Key, parameter.Value);
             }
         }
 

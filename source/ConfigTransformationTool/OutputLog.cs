@@ -9,20 +9,20 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
     public class OutputLog
     {
-        private readonly TextWriter outputStream;
-        private readonly TextWriter errorStream;
+        private readonly TextWriter _outputStream;
+        private readonly TextWriter _errorStream;
 
         private OutputLog(TextWriter outputStream, TextWriter errorStream)
         {
-            this.outputStream = outputStream;
-            this.errorStream = errorStream;
+            _outputStream = outputStream;
+            _errorStream = errorStream;
         }
 
         public static OutputLog ErrorOnly(TextWriter errorStream)
         {
             if (errorStream == null)
             {
-                throw new ArgumentNullException("errorStream");
+                throw new ArgumentNullException(nameof(errorStream));
             }
 
             return new OutputLog(null, errorStream);
@@ -32,12 +32,12 @@ namespace OutcoldSolutions.ConfigTransformationTool
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             if (errorStream == null)
             {
-                throw new ArgumentNullException("errorStream");
+                throw new ArgumentNullException(nameof(errorStream));
             }
 
             return new OutputLog(writer, errorStream);
@@ -49,18 +49,12 @@ namespace OutcoldSolutions.ConfigTransformationTool
         }
         public void WriteLine(string message, params object[] parameters)
         {
-            if (this.outputStream != null)
-            {
-                this.outputStream.WriteLine(message, parameters);
-            }
+            _outputStream?.WriteLine(message, parameters);
         }
 
         public void WriteErrorLine(string message, params object[] parameters)
         {
-            if (this.errorStream != null)
-            {
-                this.errorStream.WriteLine(message, parameters);
-            }
+            _errorStream?.WriteLine(message, parameters);
         }
     }
 }

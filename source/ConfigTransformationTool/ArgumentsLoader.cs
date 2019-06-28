@@ -16,9 +16,9 @@ namespace OutcoldSolutions.ConfigTransformationTool
         {
             get
             {
-                return !string.IsNullOrWhiteSpace(this.SourceFilePath)
-                    && !string.IsNullOrWhiteSpace(this.TransformFilePath)
-                    && !string.IsNullOrWhiteSpace(this.DestinationFilePath);
+                return !string.IsNullOrWhiteSpace(SourceFilePath)
+                    && !string.IsNullOrWhiteSpace(TransformFilePath)
+                    && !string.IsNullOrWhiteSpace(DestinationFilePath);
             }
         }
 
@@ -52,84 +52,84 @@ namespace OutcoldSolutions.ConfigTransformationTool
         /// <param name="args"></param>
         public bool Load(string[] args)
         {
-            this.DestinationFilePath = string.Empty;
-            this.SourceFilePath = string.Empty;
-            this.TransformFilePath = string.Empty;
-            this.ParametersString = string.Empty;
-            this.ParametersFile = string.Empty;
-            this.ForceParametersTask = false;
-            this.Verbose = false;
-            this.PreserveWhitespace = false;
-            this.Indent = false;
+            DestinationFilePath = string.Empty;
+            SourceFilePath = string.Empty;
+            TransformFilePath = string.Empty;
+            ParametersString = string.Empty;
+            ParametersFile = string.Empty;
+            ForceParametersTask = false;
+            Verbose = false;
+            PreserveWhitespace = false;
+            Indent = false;
 
             foreach (string arg in args)
             {
                 if (arg.IndexOf("s:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("source:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    this.SourceFilePath = GetValueFromArguments(arg);
+                    SourceFilePath = GetValueFromArguments(arg);
                     continue;
                 }
 
                 if (arg.IndexOf("t:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("transform:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    this.TransformFilePath = GetValueFromArguments(arg);
+                    TransformFilePath = GetValueFromArguments(arg);
                     continue;
                 }
 
                 if (arg.IndexOf("d:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("destination:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    this.DestinationFilePath = GetValueFromArguments(arg);
+                    DestinationFilePath = GetValueFromArguments(arg);
                     continue;
                 }
 
                 if (arg.IndexOf("p:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("parameters:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    this.ParametersString = GetValueFromArguments(arg);
+                    ParametersString = GetValueFromArguments(arg);
                     continue;
                 }
 
                 if (arg.IndexOf("pf:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("parameters.file:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    this.ParametersFile = GetValueFromArguments(arg);
+                    ParametersFile = GetValueFromArguments(arg);
                     continue;
                 }
 
                 if (arg.Equals("fpt", StringComparison.OrdinalIgnoreCase))
                 {
-                    this.ForceParametersTask = true;
+                    ForceParametersTask = true;
                     continue;
                 }
 
                 if (arg.Equals("v", StringComparison.OrdinalIgnoreCase)
                     || arg.Equals("verbose", StringComparison.OrdinalIgnoreCase))
                 {
-                    this.Verbose = true;
+                    Verbose = true;
                     continue;
                 }
 
                 if (arg.Equals("pw", StringComparison.OrdinalIgnoreCase)
                     || arg.Equals("preservewhitespace", StringComparison.OrdinalIgnoreCase))
                 {
-                    this.PreserveWhitespace = true;
+                    PreserveWhitespace = true;
                     continue;
                 }
 
                 if (arg.Equals("i", StringComparison.OrdinalIgnoreCase)
                     || arg.Equals("indent", StringComparison.OrdinalIgnoreCase))
                 {
-                    this.Indent = true;
+                    Indent = true;
                     continue;
                 }
 
                 if (arg.IndexOf("ic:", StringComparison.OrdinalIgnoreCase) == 0
                     || arg.IndexOf("indentchars:", StringComparison.OrdinalIgnoreCase) == 0)
                 {
-                    this.IndentChars = GetValueFromArguments(arg);
+                    IndentChars = GetValueFromArguments(arg);
                     continue;
                 }
 
@@ -146,7 +146,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
                     try
                     {
-                        this.DefaultEncoding = GetEncoding(name);
+                        DefaultEncoding = GetEncoding(name);
                     }
                     catch
                     {
@@ -158,8 +158,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 if (arg.Equals("q", StringComparison.OrdinalIgnoreCase)
                 || arg.Equals("quiet", StringComparison.OrdinalIgnoreCase))
                 {
-                    this.Quiet = true;
-                    continue;
+                    Quiet = true;
                 }
             }
 
