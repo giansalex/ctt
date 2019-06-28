@@ -9,9 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Config Transformation Tool")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("outcoldman")]
 [assembly: AssemblyProduct("Config Transformation Tool")]
-[assembly: AssemblyCopyright("Copyright © outcoldman 2013")]
+[assembly: AssemblyCopyright("Copyright © 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -19,7 +18,7 @@ using System.Runtime.InteropServices;
 
 [assembly: Guid("b2f553de-ccb1-4f3c-9b6f-93051e06257d")]
 
-[assembly: AssemblyVersion("1.6.0.51029")]
-[assembly: AssemblyFileVersion("1.6.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: InternalsVisibleTo("OutcoldSolutions.ConfigTransformationTool.Suites")]

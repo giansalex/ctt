@@ -89,8 +89,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
             Assembly assembly = Assembly.GetExecutingAssembly();
             string exeFile = assembly.ManifestModule.Name;
 
-            Console.WriteLine("{0}, {1}, http://ctt.codeplex.com", GetTitleString(assembly), GetVersionString(assembly));
-            Console.WriteLine("by OutcoldSolutions, http://outcoldman.com, {0}", DateTime.Today.Year);
+            Console.WriteLine("{0}, {1}, https://github.com/giansalex/ctt/", GetTitleString(assembly), GetVersionString(assembly));
+            Console.WriteLine("by Giansalex, {0}", DateTime.Today.Year);
             Console.WriteLine();
             Console.WriteLine("Arguments:");
             Console.WriteLine("  source:{file} (s:) - source file path");
