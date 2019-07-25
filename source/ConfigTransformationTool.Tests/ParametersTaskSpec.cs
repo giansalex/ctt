@@ -2,13 +2,12 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OutcoldSolutions.ConfigTransformationTool.Suites
+using System.Collections.Generic;
+using System.Diagnostics;
+using NUnit.Framework;
+
+namespace OpenSource.ConfigTransformationTool.Suites
 {
-    using System.Collections.Generic;
-    using System.Diagnostics;
-
-    using NUnit.Framework;
-
     [TestFixture]
     public class ParametersTaskSpec : BaseSpec
     {

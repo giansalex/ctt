@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace OutcoldSolutions.ConfigTransformationTool
+namespace OpenSource.ConfigTransformationTool
 {
 
     internal class Program

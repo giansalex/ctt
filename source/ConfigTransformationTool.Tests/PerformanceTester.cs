@@ -2,11 +2,11 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OutcoldSolutions.ConfigTransformationTool.Suites
-{
-    using System;
-    using System.Diagnostics;
+using System;
+using System.Diagnostics;
 
+namespace OpenSource.ConfigTransformationTool.Suites
+{
     /// <summary>
     /// http://lukencode.com/2010/03/28/c-micro-performance-testing-class/
     /// </summary>

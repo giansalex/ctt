@@ -7,7 +7,7 @@ using System.Xml;
 using System.Xml.Linq;
 using Microsoft.Web.XmlTransform;
 
-namespace OutcoldSolutions.ConfigTransformationTool
+namespace OpenSource.ConfigTransformationTool
 {
     /// <summary>
     /// Make transformation of file <see cref="SourceFilePath"/> with transform file <see cref="TransformFile"/>.

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Text;
 
-namespace OutcoldSolutions.ConfigTransformationTool
+namespace OpenSource.ConfigTransformationTool
 {
     /// <summary>
     /// Command line helper. Load parameters from comman line arguments.
     /// </summary>
-    internal class ArgumentsLoader
+    public class ArgumentsLoader
     {
         public bool AreAllRequiredParametersSet
         {

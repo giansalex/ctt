@@ -1,9 +1,9 @@
-﻿namespace OutcoldSolutions.ConfigTransformationTool.Suites
-{
-    using System.Collections;
-    using System.Text;
-    using NUnit.Framework;
+﻿using System.Collections;
+using System.Text;
+using NUnit.Framework;
 
+namespace OpenSource.ConfigTransformationTool.Suites
+{
     [TestFixture]
     public class ArgumentsLoaderTests
     {

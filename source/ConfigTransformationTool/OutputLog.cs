@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace OutcoldSolutions.ConfigTransformationTool
+namespace OpenSource.ConfigTransformationTool
 {
     public class OutputLog
     {

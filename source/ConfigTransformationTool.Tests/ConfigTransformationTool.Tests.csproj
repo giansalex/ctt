@@ -10,8 +10,8 @@
     <ProjectGuid>{14D5E90B-134D-45C5-9E31-4219F209A507}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OutcoldSolutions.ConfigTransformationTool.Suites</RootNamespace>
-    <AssemblyName>OutcoldSolutions.ConfigTransformationTool.Suites</AssemblyName>
+    <RootNamespace>OpenSource.ConfigTransformationTool.Suites</RootNamespace>
+    <AssemblyName>OpenSource.ConfigTransformationTool.Suites</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>
@@ -83,13 +83,13 @@
     <Compile Include="TransformationTaskSpec.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ConfigTransformationTool\ConfigTransformationTool.csproj">
-      <Project>{3DB44809-0AFD-42C0-8977-63335B30124E}</Project>
-      <Name>ConfigTransformationTool</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ProjectReference Include="..\ConfigTransformationTool\ConfigTransformationTool.csproj">
+      <Project>{3db44809-0afd-42c0-8977-63335b30124e}</Project>
+      <Name>ConfigTransformationTool</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

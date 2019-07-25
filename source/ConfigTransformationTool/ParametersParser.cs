@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OutcoldSolutions.ConfigTransformationTool
+namespace OpenSource.ConfigTransformationTool
 {
     /// <summary>
     /// Parse string of parameters 

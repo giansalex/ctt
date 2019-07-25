@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Web.XmlTransform;
 
-namespace OutcoldSolutions.ConfigTransformationTool
+namespace OpenSource.ConfigTransformationTool
 {
     // Simple implementation of logger
     public class TransformationLogger : IXmlTransformationLogger

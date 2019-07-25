@@ -2,14 +2,13 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OutcoldSolutions.ConfigTransformationTool.Suites
+using System;
+using System.IO;
+using System.Text;
+using NUnit.Framework;
+
+namespace OpenSource.ConfigTransformationTool.Suites
 {
-    using System;
-    using System.IO;
-    using System.Text;
-
-    using NUnit.Framework;
-
     /// <summary>
     /// Base test class. Configure log4net in <see cref="SetUp"/>.
     /// </summary>

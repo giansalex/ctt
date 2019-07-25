@@ -9,7 +9,7 @@
     <ProjectGuid>{3DB44809-0AFD-42C0-8977-63335B30124E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OutcoldSolutions.ConfigTransformationTool</RootNamespace>
+    <RootNamespace>OpenSource.ConfigTransformationTool</RootNamespace>
     <AssemblyName>ctt</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>

@@ -2,14 +2,13 @@
 // Outcold Solutions (http://outcoldman.com)
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace OutcoldSolutions.ConfigTransformationTool.Suites
+using System;
+using System.IO;
+using System.Text;
+using NUnit.Framework;
+
+namespace OpenSource.ConfigTransformationTool.Suites
 {
-    using System;
-    using System.IO;
-    using System.Text;
-
-    using NUnit.Framework;
-
     [TestFixture]
     public class TransformationTaskSpec : BaseSpec
     {
