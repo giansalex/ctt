@@ -6,12 +6,12 @@ $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 $packageArgs = @{
     PackageName    = $env:ChocolateyPackageName
     unzipLocation  = $toolsDir
-    url        = 'https://github.com/giansalex/ctt/releases/download/1.0.0/ctt-win32.zip' 
-    url64      = 'https://github.com/giansalex/ctt/releases/download/1.0.0/ctt-win64.zip' 
+    url        = 'https://github.com/giansalex/ctt/releases/download/1.0.1/ctt-win32.zip' 
+    url64      = 'https://github.com/giansalex/ctt/releases/download/1.0.1/ctt-win64.zip' 
 
-    checksum       = '82BF9F9F445B7D8FCA3DBB6F87DF636F7F81AC5B0BB41AEF94CF2F2B4DFE6B98'
+    checksum       = 'C69BD0CC96BA02BED730368A5138790C5049A86E19E043B4C30EBC92936D6562'
     checksumType   = 'sha256'
-    checksum64     = '8D1FD51F7EF58D068353048F4EF2E60842BD84F9AC5E0A7ED536F2DA1F33089A'
+    checksum64     = 'BA733BC7A1E22588AC6973944B13111F2C577182A7BBE0CF0B807A94EE22C783'
     checksumType64 = 'sha256'
 }
 
