@@ -42,13 +42,13 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
             var source = parametersString.ToCharArray();
 
-            int index = 0;
+            var index = 0;
 
-            bool fParameterNameRead = true;
-            bool fForceParameterValueRead = false;
+            var fParameterNameRead = true;
+            var fForceParameterValueRead = false;
 
-            StringBuilder parameterName = new StringBuilder();
-            StringBuilder parameterValue = new StringBuilder();
+            var parameterName = new StringBuilder();
+            var parameterValue = new StringBuilder();
 
             while (index < source.Length)
             {
@@ -66,9 +66,9 @@ namespace OutcoldSolutions.ConfigTransformationTool
                     continue;
                 }
 
-                if ((!fForceParameterValueRead && source[index] == ';')
-                    || (fForceParameterValueRead && source[index] == '"'
-                        && ((index + 1) == source.Length || source[index + 1] == ';')))
+                if (!fForceParameterValueRead && source[index] == ';'
+                    || fForceParameterValueRead && source[index] == '"'
+                    && (index + 1 == source.Length || source[index + 1] == ';'))
                 {
                     AddParameter(parameters, parameterName, parameterValue);
                     index++;
@@ -122,15 +122,14 @@ namespace OutcoldSolutions.ConfigTransformationTool
             IDictionary<string, string> parameters, StringBuilder parameterName, StringBuilder parameterValue)
         {
             var name = parameterName.ToString();
-            if (!string.IsNullOrWhiteSpace(name))
-            {
-                if (parameters.ContainsKey(name))
-                {
-                    parameters.Remove(name);
-                }
+            if (string.IsNullOrWhiteSpace(name)) return;
 
-                parameters.Add(name, parameterValue.ToString());
+            if (parameters.ContainsKey(name))
+            {
+                parameters.Remove(name);
             }
+
+            parameters.Add(name, parameterValue.ToString());
         }
     }
 }

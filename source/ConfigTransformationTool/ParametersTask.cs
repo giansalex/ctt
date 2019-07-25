@@ -46,15 +46,15 @@ namespace OutcoldSolutions.ConfigTransformationTool
         /// <returns>String with set values instead of parameters</returns>
         public string ApplyParameters(string sourceString)
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
 
-            int index = 0;
+            var index = 0;
 
-            char[] source = sourceString.ToCharArray();
+            var source = sourceString.ToCharArray();
 
-            bool fParameterRead = false;
+            var fParameterRead = false;
 
-            StringBuilder parameter = new StringBuilder();
+            var parameter = new StringBuilder();
 
             while (index < source.Length)
             {
@@ -62,7 +62,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
                 if (fParameterRead && source[index] == '}')
                 {
                     var s = parameter.ToString();
-                    int colonIndex = parameter.ToString().IndexOf(':');
+                    var colonIndex = parameter.ToString().IndexOf(':');
 
                     var parameterName = colonIndex > 0 ? s.Substring(0, colonIndex) : s;
                     var parameterDefaultValue = colonIndex > 0

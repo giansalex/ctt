@@ -86,8 +86,8 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
         private static void ShowToolHelp()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            string exeFile = assembly.ManifestModule.Name;
+            var assembly = Assembly.GetExecutingAssembly();
+            var exeFile = assembly.ManifestModule.Name;
 
             Console.WriteLine("{0}, {1}, https://github.com/giansalex/ctt/", GetTitleString(assembly), GetVersionString(assembly));
             Console.WriteLine("by Giansalex, {0}", DateTime.Today.Year);
@@ -132,7 +132,7 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
         private static string GetTitleString(Assembly asm)
         {
-            object[] attributes = asm.GetCustomAttributes(typeof(AssemblyTitleAttribute), true);
+            var attributes = asm.GetCustomAttributes(typeof(AssemblyTitleAttribute), true);
             if (attributes.Length > 0 && attributes[0] is AssemblyTitleAttribute)
             {
                 return ((AssemblyTitleAttribute) attributes[0]).Title;
@@ -143,16 +143,11 @@ namespace OutcoldSolutions.ConfigTransformationTool
 
         private static string GetVersionString(Assembly asm)
         {
-            if (asm != null && !string.IsNullOrEmpty(asm.FullName))
-            {
-                var parts = asm.FullName.Split(',');
-                if (parts.Length > 1)
-                {
-                    return parts[1].Trim();
-                }
-            }
+            if (asm == null || string.IsNullOrEmpty(asm.FullName)) return null;
 
-            return null;
+            var parts = asm.FullName.Split(',');
+
+            return parts.Length > 1 ? parts[1].Trim() : null;
         }
     }
 }
