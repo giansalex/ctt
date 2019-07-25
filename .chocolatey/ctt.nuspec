@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>ctt</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <owners>Giancarlos Salas</owners>
     <title>Config Transformation Tool</title>
     <authors>Giancarlos Salas</authors>
