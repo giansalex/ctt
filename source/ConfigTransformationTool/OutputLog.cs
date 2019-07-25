@@ -1,12 +1,8 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// Outcold Solutions (http://outcoldman.com)
-// --------------------------------------------------------------------------------------------------------------------
+﻿using System;
+using System.IO;
 
 namespace OutcoldSolutions.ConfigTransformationTool
 {
-    using System;
-    using System.IO;
-
     public class OutputLog
     {
         private readonly TextWriter _outputStream;

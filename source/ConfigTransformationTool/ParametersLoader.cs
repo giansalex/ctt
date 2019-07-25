@@ -1,14 +1,10 @@
-// --------------------------------------------------------------------------------------------------------------------
-// Outcold Solutions (http://outcoldman.com)
-// --------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml.Linq;
 
 namespace OutcoldSolutions.ConfigTransformationTool
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Xml.Linq;
-
     public class ParametersLoader
     {
         public static void LoadParameters(string parametersFile, IDictionary<string, string> parameters)

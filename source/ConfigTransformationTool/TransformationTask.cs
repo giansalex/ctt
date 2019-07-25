@@ -1,19 +1,14 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// Outcold Solutions (http://outcoldman.com)
-// --------------------------------------------------------------------------------------------------------------------
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Xml;
+using System.Xml.Linq;
+using Microsoft.Web.XmlTransform;
 
 namespace OutcoldSolutions.ConfigTransformationTool
 {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Xml;
-    using System.Xml.Linq;
-
-    using Microsoft.Web.XmlTransform;
-
     /// <summary>
     /// Make transformation of file <see cref="SourceFilePath"/> with transform file <see cref="TransformFile"/>.
     /// Look at http://msdn.microsoft.com/en-us/library/dd465326.aspx for syntax of transformation file.

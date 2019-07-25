@@ -1,12 +1,9 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// Outcold Solutions (http://outcoldman.com)
-// --------------------------------------------------------------------------------------------------------------------
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace OutcoldSolutions.ConfigTransformationTool
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
 
     internal class Program
     {

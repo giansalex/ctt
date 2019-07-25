@@ -1,13 +1,8 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// Outcold Solutions (http://outcoldman.com)
-// --------------------------------------------------------------------------------------------------------------------
+﻿using System;
+using Microsoft.Web.XmlTransform;
 
 namespace OutcoldSolutions.ConfigTransformationTool
 {
-    using System;
-
-    using Microsoft.Web.XmlTransform;
-
     // Simple implementation of logger
     public class TransformationLogger : IXmlTransformationLogger
     {

@@ -1,12 +1,8 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// Outcold Solutions (http://outcoldman.com)
-// --------------------------------------------------------------------------------------------------------------------
+﻿using System;
+using System.Text;
 
 namespace OutcoldSolutions.ConfigTransformationTool
 {
-    using System;
-    using System.Text;
-
     /// <summary>
     /// Command line helper. Load parameters from comman line arguments.
     /// </summary>
